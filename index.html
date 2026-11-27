@@ -7,6 +7,9 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#111215">
 <meta property="og:title" content="PYDERIN · Blue Christmas">
+<meta property="og:image" content="https://gimyedalm-collab.github.io/pyderin-blue-christmas/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:description" content="초대받은 사람에게만 열립니다. 12.18 – 12.29, 성수">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
@@ -175,11 +178,24 @@ details p{margin-top:6px;line-height:1.6}
 .done{display:none;text-align:center;padding-top:10px}
 .done h3{font-size:22px;font-weight:800;letter-spacing:-.03em}
 .pass{position:relative;width:212px;height:300px;margin:26px auto 0}
-.pass .face{transform:none}
+.pass .face{transform:none;background:linear-gradient(var(--sang,115deg),rgba(255,255,255,0) calc(var(--sp,40%) - 14%),rgba(255,255,255,.75) var(--sp,40%),rgba(255,255,255,0) calc(var(--sp,40%) + 12%)),linear-gradient(180deg,#f1f4fb 0%,#c6cee0 22%,#f7f9fd 40%,#aab5cd 62%,#e2e7f2 82%,#b9c3d9 100%);background-size:100% 100%,100% 240%;background-position:0 0,0 var(--ry2,40%)}
 .done .after{margin-top:44px;font-size:14px;line-height:1.8;color:var(--mute)}
 footer{padding:100px 0 110px;text-align:center}
 footer .logo{width:64px;margin:0 auto 10px;color:#5f636d}
 footer .lab{color:#5f636d}
+/* 레이저 각인 */
+.laser{position:absolute;left:-10%;right:-10%;top:4%;height:2px;z-index:3;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,#cfe0ff 20%,#fff 50%,#cfe0ff 80%,transparent);box-shadow:0 0 12px 3px rgba(150,180,255,.9),0 0 34px 10px rgba(90,130,255,.45)}
+.box.open .laser{animation:laser 2.2s cubic-bezier(.45,0,.55,1) .95s forwards}
+@keyframes laser{0%{top:4%;opacity:0}6%{opacity:1}94%{opacity:1}100%{top:96%;opacity:0}}
+.face.front .eng{clip-path:inset(0 0 100% 0)}
+.box.open .face.front .eng{animation:engrave 2.2s cubic-bezier(.45,0,.55,1) .95s forwards}
+@keyframes engrave{from{clip-path:inset(0 0 96% 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.face.front .eng{clip-path:none!important}}
+/* 소리 버튼 · 입장권 버튼 */
+.snd{position:fixed;top:10px;left:10px;z-index:30;padding:6px 11px;border:1px solid rgba(230,231,234,.25);border-radius:20px;background:rgba(0,0,0,.35);color:#c9cfdd;font:inherit;font-size:10px;font-weight:700;letter-spacing:.08em;cursor:pointer}
+.pass-act{display:flex;gap:8px;justify-content:center;margin-top:46px}
+.pass-act button{padding:12px 16px;border-radius:10px;border:1px solid rgba(230,231,234,.25);background:rgba(255,255,255,.04);color:#e6e7ea;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .fab{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translate(-50%,200%);z-index:6;padding:13px 28px;border-radius:30px;background:linear-gradient(160deg,#f4f7fd,#9aa6c2 55%,#e9edf7);color:#16171b;
   font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;box-shadow:0 12px 26px rgba(0,0,0,.5);transition:transform .5s var(--ease)}
 .fab.show{transform:translate(-50%,0)}
@@ -190,6 +206,7 @@ footer .lab{color:#5f636d}
 </head>
 <body class="locked">
 <div class="dev" id="dev">초안</div>
+<button class="snd" id="snd" type="button" aria-label="소리 켜고 끄기">SOUND ON</button>
 
 <main>
   <header class="stage" id="stage">
@@ -207,7 +224,7 @@ footer .lab{color:#5f636d}
         </svg>
         <div class="pslot">
           <div class="plate" id="plate" role="button" aria-label="금속 초대장 뒤집기">
-            <div class="face front"><div class="eng">
+            <div class="face front"><i class="laser"></i><div class="eng">
               <span class="logo"></span>
               <div class="t1">BLUE CHRISTMAS</div>
               <div class="t2">WINTER 2026 · SEOUL</div>
@@ -218,7 +235,7 @@ footer .lab{color:#5f636d}
             </div></div>
             <div class="face back"><div class="eng ko">
               <div class="to">올해 가장 고생한 당신께.</div>
-              <p>한 해를 버틴 피부에게<br>잠깐의 정적을 드립니다.<br>성수, 당신의 자리는<br>이미 비워 두었어요.</p>
+              <p>이 판을 가진 사람만<br>들어올 수 있어요.<br>12월, 성수에서<br>당신을 기다립니다.</p>
               <div class="from">— PYDERIN</div>
             </div></div>
           </div>
@@ -298,7 +315,8 @@ footer .lab{color:#5f636d}
         <div class="lab chrome-t">Confirmed</div>
         <h3 class="chrome-t" id="doneHi">확인됐어요.</h3>
         <div class="pass" id="pass"></div>
-        <p class="after">이 판이 입장권이에요. 캡처해 두세요.<br>방문 전, 저희가 먼저 연락드릴게요.</p>
+        <div class="pass-act"><button type="button" id="savePass">입장권 저장</button><button type="button" id="addCal">캘린더에 추가</button></div>
+        <p class="after" style="margin-top:20px">이 판이 입장권이에요. 현장에서 보여 주세요.<br>방문 전, 저희가 먼저 연락드릴게요.</p>
       </div>
     </section>
   </div>
@@ -311,8 +329,8 @@ footer .lab{color:#5f636d}
 /* ── 설정: 여기만 고치면 됩니다 ───────────────────── */
 const ENDPOINT = ""; // 구글 Apps Script 웹앱 URL (apps-script/사용법.txt). 비어 있으면 미리보기(초안) 모드
 const VENUES = [
-  {name:"성수 도레미약국", from:18, to:24, color:"#5f7bff"},
-  {name:"성수 혼약국",     from:25, to:29, color:"#a08cff"}
+  {name:"성수 도레미약국", from:18, to:24, color:"#5f7bff", addr:"서울 성동구 성수이로 75"},
+  {name:"성수 혼약국",     from:25, to:29, color:"#a08cff", addr:"서울 성동구 연무장길 60 제5동 1층"}
 ];
 const SLOTS = ["오전 10:00","오전 11:00","오후 7:00","오후 8:00"]; // 임시값 — 약국과 확정 후 수정
 const YEAR = 2026, MONTH = 11; // 11 = 12월
@@ -345,9 +363,10 @@ addEventListener("deviceorientation", e => { if (e.gamma == null) return; setTil
 document.getElementById("lid").onclick = async () => {
   try{ if (window.DeviceOrientationEvent && DeviceOrientationEvent.requestPermission) await DeviceOrientationEvent.requestPermission(); }catch(_){}
   box.classList.add("open"); stage.classList.add("opened");
+  thud(); laserSound(); buzz(15); setTimeout(() => ting(2200,.07,1.8), 3200);
   setTimeout(() => document.body.classList.remove("locked"), 900);
 };
-plate.onclick = () => { if (box.classList.contains("open")) plate.classList.toggle("flipped"); };
+plate.onclick = () => { if (box.classList.contains("open")){ plate.classList.toggle("flipped"); ting(1500,.09,1.2); buzz(10); } };
 
 // 달력
 const W = ["일","월","화","수","목","금","토"];
@@ -393,7 +412,8 @@ form.onsubmit = async e => {
   const data = {
     date:`${YEAR}-12-${String(pick.day).padStart(2,"0")}`, venue:pick.venue, slot:pick.slot,
     name:f.get("name").trim(), agency:f.get("agency").trim(), instagram:f.get("instagram").trim(),
-    phone:f.get("phone").trim(), guests:f.get("guests"), consult:f.get("consult")?"희망":"안 함", note:f.get("note").trim()
+    phone:f.get("phone").trim(), guests:f.get("guests"), consult:f.get("consult")?"희망":"안 함", note:f.get("note").trim(),
+    serial:(Date.now().toString(36).slice(-3) + Math.random().toString(36).slice(2,5)).toUpperCase()
   };
   go.disabled=true; go.firstChild.textContent="보내는 중";
   try{
@@ -402,16 +422,95 @@ form.onsubmit = async e => {
     document.getElementById("doneHi").textContent = `${data.name} 님, 확인됐어요.`;
     document.getElementById("pass").innerHTML =
       `<div class="face"><div class="eng" style="padding:36px 16px 24px"><span class="logo" style="width:78px"></span>
-        <div class="t1" style="margin-top:26px;font-size:14px">ADMIT ${data.guests==="1"?"TWO":"ONE"}</div>
+        <div class="t1" style="margin-top:26px;font-size:14px">ADMIT ${data.guests==="1"?"TWO":"ONE"}</div><div class="t2">NO. ${data.serial}</div>
         <div class="rule" style="margin:18px 0"></div>
         <div class="row num"><b>12월 ${pick.day}일 ${wd(pick.day)}요일 · ${data.slot}</b>${data.venue}</div>
         <div class="foot">${data.consult==="희망"?"PHARMACIST CONSULTATION":"BY INVITATION ONLY"}</div></div></div>` +
       (ENDPOINT ? "" : `<div class="devnote" style="position:absolute;left:0;right:0;bottom:-26px;text-align:center;margin:0">[초안] 미리보기라 실제로 저장되지 않았어요</div>`);
+    last = {...data, day:pick.day}; ting(2400,.09,2); buzz([10,40,10]);
     form.style.display="none"; document.getElementById("fab").remove();
     const done = document.getElementById("done"); done.style.display="block"; done.scrollIntoView({behavior:"smooth", block:"center"});
   }catch(_){
     msg.textContent="보내지 못했어요. 잠시 뒤 다시 눌러 주세요"; go.disabled=false; go.firstChild.textContent="초대 수락";
   }
+};
+
+
+// ── 소리·진동 (파일 없이 브라우저에서 직접 합성) ──
+let AC = null, soundOn = true, last = null;
+const ac = () => { if (!AC){ try{ AC = new (window.AudioContext||window.webkitAudioContext)(); }catch(_){} } if (AC && AC.state === "suspended") AC.resume(); return AC; };
+const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(_){} };
+function ting(freq=1800, vol=.1, dur=1.4){            // 금속 '팅': 배음이 어긋난 사인파 여러 개
+  const a = ac(); if (!a || !soundOn) return; const t = a.currentTime, g = a.createGain();
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t+dur); g.connect(a.destination);
+  [1,2.76,5.4,8.93].forEach((r,i) => { const o = a.createOscillator(), og = a.createGain(); o.frequency.value = freq*r; og.gain.value = [1,.5,.25,.12][i]; o.connect(og).connect(g); o.start(t); o.stop(t+dur); });
+}
+function noise(sec){ const a = ac(), n = Math.floor(sec*a.sampleRate), b = a.createBuffer(1,n,a.sampleRate), d = b.getChannelData(0); for (let i=0;i<n;i++) d[i] = Math.random()*2-1; const s = a.createBufferSource(); s.buffer = b; return s; }
+function thud(){                                       // 뚜껑 여는 '툭'
+  const a = ac(); if (!a || !soundOn) return; const s = noise(.25), f = a.createBiquadFilter(), g = a.createGain(), t = a.currentTime;
+  f.type = "lowpass"; f.frequency.value = 700; g.gain.setValueAtTime(.4,t); g.gain.exponentialRampToValueAtTime(.001,t+.25); s.connect(f).connect(g).connect(a.destination); s.start(t);
+}
+function laserSound(){                                 // 레이저 각인 '치익'
+  const a = ac(); if (!a || !soundOn) return; const t = a.currentTime + .95, dur = 2.2, s = noise(dur), f = a.createBiquadFilter(), g = a.createGain();
+  f.type = "bandpass"; f.Q.value = 9; f.frequency.setValueAtTime(2600,t); f.frequency.linearRampToValueAtTime(6200,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.045,t+.12); g.gain.setValueAtTime(.045,t+dur-.25); g.gain.linearRampToValueAtTime(0,t+dur);
+  s.connect(f).connect(g).connect(a.destination); s.start(t); s.stop(t+dur);
+}
+const sndBtn = document.getElementById("snd");
+sndBtn.onclick = () => { soundOn = !soundOn; sndBtn.textContent = soundOn ? "SOUND ON" : "SOUND OFF"; if (soundOn) ting(2000,.06,.8); };
+
+// ── 입장권 이미지 저장 (캔버스로 직접 그림) ──
+function loadImg(src){ return new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; }); }
+async function passPNG(){
+  await document.fonts.ready;
+  const W = 900, H = 1300, c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
+  x.fillStyle = "#111215"; x.fillRect(0,0,W,H);
+  const pw = 640, ph = 1000, px = (W-pw)/2, py = (H-ph)/2, r = 90;
+  x.save(); x.beginPath(); x.roundRect(px,py,pw,ph,r); x.clip();
+  const g = x.createLinearGradient(0,py,0,py+ph);
+  [["#f1f4fb",0],["#c6cee0",.22],["#f7f9fd",.40],["#aab5cd",.62],["#e2e7f2",.82],["#b9c3d9",1]].forEach(([col,o]) => g.addColorStop(o,col));
+  x.fillStyle = g; x.fillRect(px,py,pw,ph);
+  const sh = x.createLinearGradient(px,py,px+pw,py+ph); sh.addColorStop(.25,"rgba(255,255,255,0)"); sh.addColorStop(.4,"rgba(255,255,255,.6)"); sh.addColorStop(.52,"rgba(255,255,255,0)");
+  x.fillStyle = sh; x.fillRect(px,py,pw,ph);
+  x.globalAlpha = .06; for (let i=px;i<px+pw;i+=2){ x.fillStyle = i%4 ? "#000" : "#fff"; x.fillRect(i,py,1,ph); } x.globalAlpha = 1;
+  x.restore();
+  x.lineWidth = 3; x.strokeStyle = "rgba(255,255,255,.7)"; x.beginPath(); x.roundRect(px+2,py+2,pw-4,ph-4,r-2); x.stroke();
+  const eng = (txt, y, font, ls=0) => { x.font = font; x.textAlign = "center"; x.letterSpacing = ls+"px";
+    x.fillStyle = "rgba(255,255,255,.85)"; x.fillText(txt, W/2, y+2); x.fillStyle = "rgba(22,28,52,.86)"; x.fillText(txt, W/2, y); };
+  const logo = await loadImg("logo-white.png");
+  if (logo){ const lw = 260, lh = lw*173/600, t = document.createElement("canvas"); t.width = lw; t.height = lh; const tx = t.getContext("2d");
+    tx.drawImage(logo,0,0,lw,lh); tx.globalCompositeOperation = "source-in"; tx.fillStyle = "rgba(22,28,52,.85)"; tx.fillRect(0,0,lw,lh);
+    x.drawImage(t,(W-lw)/2,py+130); }
+  eng(`ADMIT ${last.guests==="1"?"TWO":"ONE"}`, py+360, "700 46px Pretendard", 3);
+  eng(`NO. ${last.serial}`, py+420, "500 28px Pretendard", 4);
+  x.fillStyle = "rgba(22,28,52,.45)"; x.fillRect(W/2-60, py+480, 120, 2);
+  eng(`12월 ${last.day}일 ${wd(last.day)}요일`, py+580, "700 44px Pretendard");
+  eng(last.slot, py+640, "600 34px Pretendard");
+  eng(last.venue, py+720, "500 32px Pretendard");
+  eng("BLUE CHRISTMAS 2026 · SEOUL", py+ph-150, "700 24px Pretendard", 4);
+  eng(last.consult==="희망" ? "PHARMACIST CONSULTATION" : "BY INVITATION ONLY", py+ph-100, "500 20px Pretendard", 4);
+  return new Promise(r => c.toBlob(r, "image/png"));
+}
+function saveFile(blob, name){
+  const file = new File([blob], name, {type: blob.type});
+  if (navigator.canShare && navigator.canShare({files:[file]})) return navigator.share({files:[file]}).catch(()=>{});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+document.getElementById("savePass").onclick = async () => { if (!last) return; ting(1800,.06,.8); saveFile(await passPNG(), `PYDERIN_BlueChristmas_${last.serial}.png`); };
+
+// ── 캘린더에 추가 (.ics, 한국 시간 → UTC) ──
+document.getElementById("addCal").onclick = () => {
+  if (!last) return;
+  const [ap, hm] = last.slot.split(" "); let [h, m] = hm.split(":").map(Number); if (ap === "오후" && h < 12) h += 12;
+  const z = d => d.toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+  const start = new Date(Date.UTC(YEAR, MONTH, last.day, h-9, m)), end = new Date(start.getTime() + 60*60*1000);
+  const v = VENUES.find(x => x.name === last.venue);
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PYDERIN//Blue Christmas//KO","BEGIN:VEVENT",
+    `UID:${last.serial}@pyderin-blue-christmas`,`DTSTAMP:${z(new Date())}`,`DTSTART:${z(start)}`,`DTEND:${z(end)}`,
+    "SUMMARY:PYDERIN Blue Christmas",`LOCATION:${last.venue} ${v ? v.addr : ""}`,
+    `DESCRIPTION:초대받은 분 전용 시간 · 입장권 NO. ${last.serial}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
+  saveFile(new Blob([ics], {type:"text/calendar"}), "PYDERIN_BlueChristmas.ics");
 };
 
 // 스크롤 등장 · 하단 버튼

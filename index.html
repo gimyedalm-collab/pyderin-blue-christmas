@@ -186,10 +186,10 @@ footer .lab{color:#5f636d}
 /* 레이저 각인 */
 .laser{position:absolute;left:-10%;right:-10%;top:4%;height:2px;z-index:3;pointer-events:none;opacity:0;
   background:linear-gradient(90deg,transparent,#cfe0ff 20%,#fff 50%,#cfe0ff 80%,transparent);box-shadow:0 0 12px 3px rgba(150,180,255,.9),0 0 34px 10px rgba(90,130,255,.45)}
-.box.open .laser{animation:laser .45s cubic-bezier(.45,0,.55,1) .35s forwards}
+.box.open .laser{animation:laser .7s cubic-bezier(.45,0,.55,1) .5s forwards}
 @keyframes laser{0%{top:4%;opacity:0}6%{opacity:1}94%{opacity:1}100%{top:96%;opacity:0}}
 .face.front .eng{clip-path:inset(0 0 100% 0)}
-.box.open .face.front .eng{animation:engrave .45s cubic-bezier(.45,0,.55,1) .35s forwards}
+.box.open .face.front .eng{animation:engrave .7s cubic-bezier(.45,0,.55,1) .5s forwards}
 @keyframes engrave{from{clip-path:inset(0 0 96% 0)}to{clip-path:inset(0 0 0 0)}}
 @media (prefers-reduced-motion:reduce){.face.front .eng{clip-path:none!important}}
 /* 소리 버튼 · 입장권 버튼 */
@@ -363,7 +363,7 @@ addEventListener("deviceorientation", e => { if (e.gamma == null) return; setTil
 document.getElementById("lid").onclick = async () => {
   try{ if (window.DeviceOrientationEvent && DeviceOrientationEvent.requestPermission) await DeviceOrientationEvent.requestPermission(); }catch(_){}
   box.classList.add("open"); stage.classList.add("opened");
-  thud(); laserSound(); buzz(15); setTimeout(() => ting(2200,.07,1.8), 850);
+  thud(); laserSound(); buzz(15); setTimeout(() => ting(2200,.07,1.8), 1250);
   setTimeout(() => document.body.classList.remove("locked"), 900);
 };
 plate.onclick = () => { if (box.classList.contains("open")){ plate.classList.toggle("flipped"); ting(1500,.09,1.2); buzz(10); } };
@@ -451,9 +451,9 @@ function thud(){                                       // 뚜껑 여는 '툭'
   f.type = "lowpass"; f.frequency.value = 700; g.gain.setValueAtTime(.4,t); g.gain.exponentialRampToValueAtTime(.001,t+.25); s.connect(f).connect(g).connect(a.destination); s.start(t);
 }
 function laserSound(){                                 // 레이저 각인 '치익'
-  const a = ac(); if (!a || !soundOn) return; const t = a.currentTime + .35, dur = .45, s = noise(dur), f = a.createBiquadFilter(), g = a.createGain();
+  const a = ac(); if (!a || !soundOn) return; const t = a.currentTime + .5, dur = .7, s = noise(dur), f = a.createBiquadFilter(), g = a.createGain();
   f.type = "bandpass"; f.Q.value = 9; f.frequency.setValueAtTime(2600,t); f.frequency.linearRampToValueAtTime(6200,t+dur);
-  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.045,t+.12); g.gain.setValueAtTime(.045,t+dur-.08); g.gain.linearRampToValueAtTime(0,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.045,t+.12); g.gain.setValueAtTime(.045,t+dur-.15); g.gain.linearRampToValueAtTime(0,t+dur);
   s.connect(f).connect(g).connect(a.destination); s.start(t); s.stop(t+dur);
 }
 const sndBtn = document.getElementById("snd");

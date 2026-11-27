@@ -15,382 +15,322 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Marcellus&family=Pinyon+Script&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
-:root{
-  --v1:#071c59; --v2:#061643; --v3:#040e2d; --ink:#e9edf6; --mute:#9aa5c4; --line:rgba(200,210,235,.28);
-  --ease:cubic-bezier(.22,1,.36,1);
-}
+:root{ --v1:#071c59; --v2:#061643; --v3:#040e2d; --ink:#e9edf6; --mute:#a3add0; --line:rgba(200,210,235,.3); --ease:cubic-bezier(.22,1,.36,1); }
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--v3)}
+html,body{height:100%}
 body{font-family:"Gowun Batang",serif;color:var(--ink);word-break:keep-all;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  background:linear-gradient(180deg,var(--v1) 0,var(--v2) 900px,var(--v3) 100%) fixed}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;z-index:0;
-  background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 7px)}
-body.locked{overflow:hidden;height:100svh}
-main{position:relative;z-index:1}
-h1,h2,h3{text-wrap:balance} p{text-wrap:pretty}
+  background:radial-gradient(90% 60% at 50% 35%,#0b2370 0%,var(--v2) 55%,var(--v3) 100%) fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 7px)}
 .sv{color:transparent;background:linear-gradient(180deg,#ffffff 0%,#e4e9f4 45%,#b4bdd2 100%);-webkit-background-clip:text;background-clip:text}
-.caps{font-family:Marcellus,serif;font-size:10.5px;letter-spacing:.1em;line-height:1.8;text-transform:uppercase}
+.caps{font-family:Marcellus,serif;font-size:12px;letter-spacing:.08em;line-height:1.75;text-transform:uppercase}
 .cz{font-family:Cinzel,serif;letter-spacing:.03em}
 .scr{font-family:"Pinyon Script",cursive;line-height:1}
 .num{font-variant-numeric:tabular-nums}
 .logo{display:block;background:currentColor;-webkit-mask:url(logo-white.png) center/contain no-repeat;mask:url(logo-white.png) center/contain no-repeat;aspect-ratio:600/173}
-.star{display:block;width:22px;height:24px;margin:22px auto}
-.rule{width:36px;height:1px;margin:20px auto;background:#c8d0e2;opacity:.8}
-.wrap{max-width:420px;margin:0 auto;padding:0 22px}
+.star{display:block;width:22px;height:24px;margin:20px auto}
+.rule{width:36px;height:1px;margin:18px auto;background:#c8d0e2;opacity:.8}
+.velvet{background:linear-gradient(180deg,#0a2266 0%,#071c59 30%,#061643 65%,#040e2d 100%);box-shadow:0 40px 70px rgba(0,0,0,.6),inset 0 0 0 1px rgba(200,210,235,.14)}
+.frame::before{content:"";position:absolute;inset:12px;border:1px solid var(--line);pointer-events:none}
+.frame::after{content:"";position:absolute;inset:16px;border:1px solid rgba(200,210,235,.12);pointer-events:none}
+.ribbon{background:linear-gradient(180deg,#e9edf6 0 1.5px,#020c40 1.5px,#06225f 22%,#17458f 44%,#0b2a6c 58%,#021252 78%,#01052c calc(100% - 1.5px),#e9edf6 calc(100% - 1.5px));box-shadow:0 4px 10px rgba(0,0,0,.4)}
 
-/* ── 첫 화면: 리본으로 묶인 초대장 ── */
-.hero{position:relative;height:100svh;min-height:620px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.inv{position:relative;width:330px;height:560px;transform:scale(var(--fit,1));perspective:1600px}
-.paper{position:absolute;inset:0;border-radius:3px;background:linear-gradient(180deg,#0a2266 0%,#071c59 30%,#061643 65%,#040e2d 100%);
-  box-shadow:0 40px 70px rgba(0,0,0,.6),inset 0 0 0 1px rgba(200,210,235,.14)}
-.paper::before{content:"";position:absolute;inset:12px;border:1px solid var(--line);pointer-events:none}
-.paper::after{content:"";position:absolute;inset:16px;border:1px solid rgba(200,210,235,.12);pointer-events:none}
-.inside{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 26px}
-.inside .the{font-size:13px;letter-spacing:.08em;margin-top:18px}
-.inside .b{font-size:70px;margin-top:-2px}
-.inside .ch{font-size:33px;font-weight:500;margin-top:-6px}
-.inside .ko{margin-top:8px;font-size:12px;color:var(--mute)}
-.inside .date{margin-top:4px;font-size:17px}
-.inside .rule{margin:16px auto}
-.inside .star{margin:18px auto}
-.cover{transform-origin:0 50%;transition:transform 1.4s cubic-bezier(.65,0,.25,1) .55s,box-shadow 1.4s;backface-visibility:hidden;-webkit-backface-visibility:hidden;z-index:2;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:96px;text-align:center}
-.cover .logo{width:92px;color:#dfe4ef;opacity:.9}
-.cover .scr{margin-top:20px;font-size:52px}
-.cover .caps{margin-top:6px}
-.cover .bottom{position:absolute;left:0;right:0;bottom:40px}
-.inv.open .cover{transform:rotateY(-105deg);box-shadow:none}
-.inv.gone .cover{visibility:hidden}
-/* 리본 */
-.band{position:absolute;left:-8px;right:-8px;top:64%;height:30px;margin-top:-15px;z-index:3;display:flex;pointer-events:none}
-.band i{flex:1;box-shadow:0 4px 10px rgba(0,0,0,.4);transition:transform .9s cubic-bezier(.6,0,.3,1),opacity .7s ease .15s;
-  background:linear-gradient(180deg,#e9edf6 0 1.5px,#020c40 1.5px,#06225f 22%,#17458f 44%,#0b2a6c 58%,#021252 78%,#01052c calc(100% - 1.5px),#e9edf6 calc(100% - 1.5px))}
-.bow{position:absolute;left:50%;top:64%;width:150px;z-index:4;transform:translate(-50%,-22%);filter:drop-shadow(0 12px 14px rgba(0,0,0,.5));cursor:pointer;
+/* ── 무대 ── */
+.stage{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0 24px}
+.box{position:relative;width:330px;height:640px;transform:scale(var(--fit,1));transform-origin:center}
+.hold{width:100%;height:calc(640px * var(--fit,1));display:flex;justify-content:center;align-items:center}
+
+/* 봉투 */
+.env{position:absolute;inset:0;z-index:5;transition:transform 1s cubic-bezier(.6,0,.3,1) 1.9s,opacity .8s ease 2.1s}
+.env .back,.env .front,.env .flap{position:absolute;inset:0}
+.env .back{border-radius:3px}
+.env .card-peek{position:absolute;left:14px;right:14px;top:14px;bottom:14px;border-radius:2px;transition:transform 1.1s cubic-bezier(.6,0,.3,1) 1s;z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:70px;text-align:center}
+.env .front{z-index:2;clip-path:polygon(0 0,50% 40%,100% 0,100% 100%,0 100%);border-radius:3px;
+  background:linear-gradient(180deg,#0a2266 0%,#071c59 40%,#05123a 100%);box-shadow:inset 0 0 0 1px rgba(200,210,235,.14)}
+.env .front::after{content:"";position:absolute;inset:0;background:linear-gradient(32deg,transparent 49.7%,rgba(0,0,0,.25) 50%,transparent 50.4%),linear-gradient(-32deg,transparent 49.7%,rgba(0,0,0,.25) 50%,transparent 50.4%)}
+.env .flap{z-index:3;transform-origin:50% 0;transition:transform .8s var(--ease) .55s,z-index 0s .95s;transform-style:preserve-3d}
+.env .flap i{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 42%);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:linear-gradient(180deg,#0c2672,#081b57);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.env .flap i+i{transform:rotateX(180deg);background:linear-gradient(180deg,#061643,#0a2266)}
+.env .addr{position:absolute;left:0;right:0;bottom:70px;z-index:3;text-align:center}
+.env .addr .logo{width:84px;margin:0 auto;color:#dfe4ef}
+.env .addr .scr{margin-top:14px;font-size:44px}
+.env .addr .caps{margin-top:4px}
+.band{position:absolute;left:-8px;right:-8px;top:40%;height:30px;margin-top:-15px;z-index:6;display:flex;pointer-events:none}
+.band i{flex:1;transition:transform .9s cubic-bezier(.6,0,.3,1),opacity .7s ease .15s}
+.bow{position:absolute;left:50%;top:40%;width:146px;z-index:7;transform:translate(-50%,-22%);filter:drop-shadow(0 12px 14px rgba(0,0,0,.5));cursor:pointer;
   transition:transform .9s cubic-bezier(.6,0,.3,1),opacity .6s ease .2s;-webkit-tap-highlight-color:transparent}
-.inv:not(.open) .bow{animation:nudge 2.6s ease-in-out 1.2s infinite}
+.box:not(.opening) .bow{animation:nudge 2.6s ease-in-out 1.2s infinite}
 @keyframes nudge{0%,80%,100%{transform:translate(-50%,-22%)}88%{transform:translate(-50%,-22%) rotate(-4deg)}94%{transform:translate(-50%,-22%) rotate(3deg)}}
-.inv.open .bow{transform:translate(-50%,-22%) translateY(-150%) rotate(-12deg) scale(.85);opacity:0;pointer-events:none}
-.inv.open .band i:first-child{transform:translateX(-110%);opacity:0}
-.inv.open .band i:last-child{transform:translateX(110%);opacity:0}
-.hint{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom));text-align:center;color:var(--mute);transition:opacity .5s}
+.box.opening .bow{transform:translate(-50%,-22%) translateY(-150%) rotate(-12deg) scale(.85);opacity:0;pointer-events:none}
+.box.opening .band i:first-child{transform:translateX(-110%);opacity:0}
+.box.opening .band i:last-child{transform:translateX(110%);opacity:0}
+.box.opening .env .flap{transform:rotateX(180deg);z-index:0}
+.box.opening .env .card-peek{transform:translateY(-62%)}
+.box.opening .env{transform:translateY(120%);opacity:0}
+.box.opened .env,.box.opened .band,.box.opened .bow{display:none}
 
-/* ── 본문 ── */
-.rv{opacity:0;transform:translateY(16px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
-.rv.in{opacity:1;transform:none}
-section{padding-top:110px;text-align:center}
-.head .scr{font-size:46px}
-.head .cz{margin-top:2px;font-size:22px;font-weight:500}
-.letter p{margin-top:22px;font-size:16px;line-height:2.05}
-.letter .to{margin-top:18px;font-size:17px}
-.letter .fr{margin-top:20px}
-.prog{margin-top:26px}
-.item .n{font-size:15px}
-.item b{display:block;margin-top:6px;font-size:18px;font-weight:700}
-.item span{display:block;margin-top:6px;font-size:14px;line-height:1.75;color:var(--mute)}
-.press q{display:block;margin-top:20px;font-size:22px;line-height:1.6;quotes:"“" "”"}
-.press .src{margin-top:12px;font-family:Pretendard,sans-serif;font-size:11px;color:var(--mute)}
-.press .obj{position:relative;margin:34px auto 0;width:220px;height:250px}
-.press .obj::before{content:"";position:absolute;left:50%;top:50%;width:260px;height:260px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(150,175,255,.28),transparent 65%)}
-.press .obj img{position:relative;width:160px;margin-top:10px;transform:rotate(-5deg);filter:drop-shadow(0 18px 22px rgba(0,0,0,.55))}
-.press .get{margin-top:18px;font-size:15px;line-height:1.85;color:var(--mute)}
-.places{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.place{position:relative;padding:30px 12px 24px;background:rgba(4,14,45,.55);box-shadow:0 20px 40px rgba(0,0,0,.4)}
-.place::before{content:"";position:absolute;inset:7px;border:1px solid var(--line);pointer-events:none}
-.place .d{font-size:26px;font-weight:500}
-.place .m{margin-top:2px}
-.place b{display:block;margin-top:14px;font-size:15px}
-.place .ad{margin-top:6px;font-family:Pretendard,sans-serif;font-size:11px;line-height:1.55;color:var(--mute)}
-.place a{position:relative;display:inline-block;margin-top:10px;font-family:Pretendard,sans-serif;font-size:12px;color:var(--ink);text-underline-offset:3px}
-/* 회신서 */
-.reply{position:relative;margin-top:26px;padding:38px 22px 28px;text-align:left;background:rgba(4,14,45,.55);box-shadow:0 30px 50px rgba(0,0,0,.45)}
-.reply::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);pointer-events:none}
-.q2{margin-top:28px;font-family:Marcellus,serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#c9d1e6}
-.q2:first-child{margin-top:0}
-.cal-head{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-family:Pretendard,sans-serif;font-size:12px;color:var(--mute)}
-.cal-head i{display:inline-block;width:7px;height:7px;border-radius:50%;margin:0 4px 0 10px}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px;text-align:center}
-.grid .w{font-family:Pretendard,sans-serif;font-size:11px;color:#6f7aa0}
-.day{aspect-ratio:1;border:0;border-radius:50%;background:none;font-family:Cinzel,serif;font-size:14px;color:rgba(233,237,246,.18);display:flex;align-items:center;justify-content:center;position:relative}
-.day.on{color:var(--ink);cursor:pointer}
-.day.on::after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--c)}
-.day.sel{background:var(--ink);color:var(--v2)}
-.day.sel::after{background:var(--v2)}
-.picked{margin-top:8px;font-size:14px;min-height:22px;color:#c9d1e6}
-.slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.slot{padding:12px 0;border:1px solid var(--line);background:none;color:var(--ink);font-family:Cinzel,serif;font-size:13px;cursor:pointer}
-.slot.sel{background:var(--ink);color:var(--v2);border-color:var(--ink)}
-.slots[aria-disabled=true]{opacity:.35;pointer-events:none}
-.field{display:block;margin-top:14px;font-family:Pretendard,sans-serif;font-size:12px;color:var(--mute)}
-input,select,textarea{display:block;width:100%;margin-top:2px;padding:10px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;color:#fff;font-family:Pretendard,sans-serif;font-size:16px;-webkit-appearance:none;appearance:none}
-select{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9d1e6'/%3E%3C/svg%3E") right 4px center no-repeat}
-select option{color:#000}
-input:focus,select:focus,textarea:focus{outline:none;border-bottom-color:#c9d1e6}
-input::placeholder,textarea::placeholder{color:#55618a}
-.check{display:flex;gap:9px;align-items:flex-start;margin-top:16px;font-family:Pretendard,sans-serif;font-size:14px;color:var(--ink)}
-.check input{width:17px;height:17px;margin:2px 0 0;padding:0;flex:none;border:0;-webkit-appearance:auto;appearance:auto;accent-color:#c9d1e6}
-details{margin:6px 0 0 26px;font-family:Pretendard,sans-serif;font-size:12px;color:var(--mute)}
-details summary{cursor:pointer;text-decoration:underline;text-underline-offset:2px;list-style:none}
-details p{margin-top:6px;line-height:1.6}
-.submit{margin-top:26px;width:100%;padding:17px;border:0;background:var(--ink);color:var(--v2);font-family:"Gowun Batang",serif;font-size:16px;font-weight:700;cursor:pointer}
+/* 카드 묶음 (옆으로 넘김) */
+.deck{display:none;width:100%;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.deck::-webkit-scrollbar{display:none}
+.deck .track{display:flex}
+.slide{flex:0 0 100%;scroll-snap-align:center;display:flex;justify-content:center;padding:4px 0 10px}
+.card{position:relative;width:330px;height:640px;zoom:var(--fit,1);border-radius:3px;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;text-align:center;padding:44px 28px 40px}
+.show .deck{display:block;animation:fadein .6s ease both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.nav{display:none;align-items:center;gap:16px;margin-top:10px}
+.show .nav{display:flex;animation:fadein .6s ease .3s both}
+.nav button{background:none;border:0;color:var(--mute);font-family:Marcellus,serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 6px;cursor:pointer}
+.nav button:disabled{opacity:.25}
+.dots{display:flex;gap:8px}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(200,210,235,.3);transition:background .3s}
+.dots i.on{background:#e9edf6}
+
+/* 카드 1: 초대장 */
+.c1{justify-content:center}
+.c1 .the{font-size:13px;letter-spacing:.08em;margin-top:22px}
+.c1 .b{font-size:72px;margin-top:-2px}
+.c1 .ch{font-size:34px;font-weight:500;margin-top:-6px}
+.c1 .date{margin-top:4px;font-size:18px}
+/* 카드 2: 안내 */
+.c2 .ttl{font-size:46px}
+.c2 .v{margin-top:4px}
+.c2 .v .d{font-size:24px;font-weight:500}
+.c2 .v b{display:block;margin-top:8px;font-size:18px}
+.c2 .v .ad{margin-top:4px;font-family:Pretendard,sans-serif;font-size:12.5px;line-height:1.6;color:var(--mute)}
+.c2 .v a{display:inline-block;margin-top:8px;font-family:Pretendard,sans-serif;font-size:12.5px;color:var(--ink);text-underline-offset:3px;position:relative;z-index:1}
+.c2 .foot{margin-top:auto;padding-top:10px}
+/* 카드 3: 회신 */
+.c3{text-align:left;align-items:stretch;padding:30px 24px 26px}
+.c3 .ttl{text-align:center;font-size:40px}
+.c3 .sub{text-align:center;margin-top:2px}
+.lbl{margin-top:14px;font-family:Marcellus,serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c9d1e6}
+.lbl small{font-family:"Gowun Batang",serif;letter-spacing:0;text-transform:none;color:var(--mute);margin-left:6px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{border:1px solid var(--line);background:none;color:var(--ink);font-family:Cinzel,serif;cursor:pointer;line-height:1.15;transition:background .2s,color .2s}
+.chip.day{width:calc((100% - 30px)/7);padding:4px 0 3px;font-size:14px}
+.chip.day small{display:block;font-family:"Gowun Batang",serif;font-size:11px;color:var(--mute);margin-top:2px}
+.chip.t{flex:1 1 calc(25% - 5px);padding:9px 0;font-family:"Gowun Batang",serif;font-size:12px;white-space:nowrap}
+.chip.g{flex:1;padding:8px 0;font-family:"Gowun Batang",serif;font-size:14px}
+.chip.sel{background:var(--ink);color:var(--v2);border-color:var(--ink)}
+.chip.sel small{color:#3b4a7d}
+.vname{margin-top:8px;font-size:12px;color:var(--mute)}
+.vname:first-of-type{margin-top:8px}
+.c3 input{display:block;width:100%;margin-top:2px;padding:8px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;color:#fff;font-family:Pretendard,sans-serif;font-size:16px}
+.c3 input:focus{outline:none;border-bottom-color:#c9d1e6}
+.c3 input::placeholder{color:#5d6a95}
+.agree{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:13px;color:var(--ink);cursor:pointer}
+.agree input{width:16px!important;height:16px;margin:2px 0 0!important;padding:0!important;flex:none;accent-color:#c9d1e6}
+.more{margin:4px 0 0 24px;font-family:Pretendard,sans-serif;font-size:12px;color:var(--mute);text-decoration:underline;text-underline-offset:2px;background:none;border:0;cursor:pointer;text-align:left}
+.pv{cursor:pointer;display:none;position:absolute;left:24px;right:24px;bottom:84px;z-index:2;padding:12px;background:#061643;border:1px solid var(--line);margin:0;font-family:Pretendard,sans-serif;font-size:12px;line-height:1.6;color:var(--mute)}
+.pv.on{display:block}
+.submit{margin-top:12px;width:100%;padding:13px;border:0;background:var(--ink);color:var(--v2);font-family:"Gowun Batang",serif;font-size:16px;font-weight:700;cursor:pointer}
 .submit:disabled{opacity:.5}
-.msg{margin-top:10px;font-family:Pretendard,sans-serif;font-size:13px;text-align:center;min-height:20px;color:#ff9fb0}
-.done{display:none;text-align:center;padding-top:10px}
-.done .scr{font-size:48px}
-.done h3{margin-top:6px;font-size:19px;font-weight:400}
-.pass{position:relative;margin:26px auto 0;width:260px;padding:34px 18px 28px;background:linear-gradient(180deg,#0a2266,#061643 60%,#040e2d);box-shadow:0 30px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(200,210,235,.14)}
-.pass::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);pointer-events:none}
-.pass .logo{width:74px;margin:0 auto;color:#dfe4ef}
-.pass .a1{margin-top:18px;font-size:22px;font-weight:500}
-.pass .a2{margin-top:4px}
-.pass .a3{margin-top:4px;font-size:16px;font-weight:700}
-.pass .a4{margin-top:4px;font-size:14px;color:var(--mute)}
-.pass-act{display:flex;gap:8px;justify-content:center;margin-top:24px}
-.pass-act button{padding:12px 16px;border:1px solid var(--line);background:none;color:var(--ink);font-family:"Gowun Batang",serif;font-size:13px;cursor:pointer}
-.done .after{margin-top:20px;font-size:14px;line-height:1.85;color:var(--mute)}
-footer{padding:100px 0 110px;text-align:center}
-footer .logo{width:64px;margin:0 auto 10px;color:#5d6a92}
-footer .caps{color:#5d6a92}
-.fab{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translate(-50%,200%);z-index:6;padding:13px 28px;background:var(--ink);color:var(--v2);
-  font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;box-shadow:0 12px 26px rgba(0,0,0,.45);transition:transform .5s var(--ease)}
-.fab.show{transform:translate(-50%,0)}
-.snd{position:fixed;top:10px;left:10px;z-index:30;padding:6px 11px;border:1px solid var(--line);border-radius:20px;background:rgba(0,0,0,.25);color:#c9d1e6;font-family:Marcellus,serif;font-size:10px;letter-spacing:.08em;cursor:pointer}
+.msg{position:absolute;left:24px;right:24px;bottom:8px;font-family:Pretendard,sans-serif;font-size:12.5px;text-align:center;color:#ff9fb0}
+/* 완료 */
+.c4{justify-content:center}
+.c4 .scr{font-size:48px}
+.c4 .a1{margin-top:20px;font-size:26px;font-weight:500}
+.c4 .a3{font-size:17px;font-weight:700}
+.c4 .a4{margin-top:4px;font-size:14px;color:var(--mute)}
+.c4 .act{display:flex;gap:8px;margin-top:22px}
+.c4 .act button{padding:11px 14px;border:1px solid var(--line);background:none;color:var(--ink);font-family:"Gowun Batang",serif;font-size:13px;cursor:pointer}
+.c4 .after{margin-top:16px;font-size:13px;line-height:1.75;color:var(--mute)}
 .dev{position:fixed;top:10px;right:10px;z-index:30;font-family:Pretendard,sans-serif;font-size:11px;padding:3px 8px;border-radius:10px;background:#ffd36e;color:#3a2a00;font-weight:700}
-.devnote{margin-top:10px;font-family:Pretendard,sans-serif;font-size:12px;color:#ffd36e}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+.devnote{margin-top:6px;font-family:Pretendard,sans-serif;font-size:12px;color:#ffd36e}
+.hint{margin-top:16px;color:var(--mute);transition:opacity .4s}
+.show .hint{display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
-<body class="locked">
+<body>
 <div class="dev" id="dev">초안</div>
-<button class="snd" id="snd" type="button" aria-label="소리 켜고 끄기">SOUND ON</button>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gsv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#b4bdd2"/></linearGradient>
   <symbol id="star" viewBox="0 0 26 28"><path d="M13 0 L14.6 12 L26 14 L14.6 16 L13 28 L11.4 16 L0 14 L11.4 12 Z" fill="url(#gsv)"/></symbol></defs></svg>
 
-<main>
-  <header class="hero" id="hero">
-    <div class="inv" id="inv">
-      <!-- 안쪽: 초대장 본문 -->
-      <div class="paper inside">
-        <div class="caps sv">You are cordially invited</div>
-        <div class="the cz sv">THE</div>
-        <div class="b scr sv">Blue</div>
-        <div class="ch cz sv">CHRISTMAS</div>
-        <svg class="star"><use href="#star"/></svg>
-        <div class="caps sv">By appointment</div>
-        <div class="date cz sv num">18 – 29 DECEMBER 2026</div>
-        <div class="rule"></div>
-        <div class="caps sv">Doremi Pharmacy · 18–24<br>Hon Pharmacy · 25–29<br>Seongsu, Seoul</div>
-        <div class="rule"></div>
-        <div class="caps sv">Kindly RSVP below</div>
+<main class="stage" id="stage">
+  <!-- 봉투 -->
+  <div class="hold" id="hold">
+    <div class="box" id="box">
+      <div class="env">
+        <div class="back velvet"></div>
+        <div class="card-peek velvet frame" style="position:absolute"><div class="caps sv">You are cordially invited</div><div class="cz sv" style="margin-top:22px;font-size:13px;letter-spacing:.08em">THE</div><div class="scr sv" style="font-size:72px">Blue</div></div>
+        <div class="front"></div>
+        <div class="flap"><i></i><i></i></div>
+        <div class="addr"><span class="logo" role="img" aria-label="PYDERIN"></span><div class="scr sv">Blue Christmas</div><div class="caps sv">By invitation only</div></div>
       </div>
-      <!-- 표지 -->
-      <div class="paper cover" id="cover">
-        <span class="logo" role="img" aria-label="PYDERIN"></span>
-        <div class="scr sv">Blue Christmas</div>
-        <div class="caps sv">By invitation only</div>
-        <div class="caps sv" style="margin-top:2px;opacity:.75">MMXXVI · Seongsu</div>
-      </div>
-      <div class="band" aria-hidden="true"><i></i><i></i></div>
+      <div class="band ribbon-wrap" aria-hidden="true"><i class="ribbon"></i><i class="ribbon"></i></div>
       <img class="bow" id="bow" src="bow.png" alt="리본 풀기" role="button">
     </div>
-    <div class="hint caps" id="hint">리본을 풀어 주세요</div>
-  </header>
-
-  <div class="wrap">
-    <section class="press">
-      <div class="caps sv rv">As seen abroad</div>
-      <q class="rv">해외 매체들이 주목한<br>‘헤일리 비버의 블루 마스크’</q>
-      <div class="src rv">출처 Marie Claire Australia 2026.11.17 · RUSSH 2026.11.02</div>
-      <div class="obj rv"><img src="pouch.png" alt="하이드로부스터 PDRN SOS 히알 수딩 마스크"></div>
-    </section>
-
-    <section>
-      <div class="head"><div class="scr sv rv">Venue</div><div class="cz sv rv">날짜별 장소</div></div>
-      <div class="places">
-        <div class="place rv"><div class="d cz sv num">18 – 24</div><div class="m caps sv">December</div><b>성수 도레미약국</b><div class="ad">서울 성동구<br>성수이로 75</div>
-          <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%20%EB%8F%84%EB%A0%88%EB%AF%B8%EC%95%BD%EA%B5%AD" target="_blank" rel="noopener">지도 열기</a></div>
-        <div class="place rv"><div class="d cz sv num">25 – 29</div><div class="m caps sv">December</div><b>성수 혼약국</b><div class="ad">서울 성동구 연무장길 60<br>제5동 1층</div>
-          <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EC%97%B0%EB%AC%B4%EC%9E%A5%EA%B8%B8%2060" target="_blank" rel="noopener">지도 열기</a></div>
-      </div>
-    </section>
-
-    <section id="reply-sec">
-      <div class="head"><div class="scr sv rv">R.S.V.P.</div><div class="cz sv rv">오실 날을 알려 주세요</div></div>
-      <form class="reply rv" id="rsvp" novalidate>
-        <div class="q2">Date · 날짜</div>
-        <div class="cal-head"><span class="num">2026년 12월</span><span><i style="background:#8fb0ff"></i>도레미약국<i style="background:#c3b6ff"></i>혼약국</span></div>
-        <div class="grid" id="cal" role="group" aria-label="12월 방문 날짜"></div>
-        <div class="picked" id="picked"></div>
-        <div class="q2">Time · 시간</div>
-        <div class="slots" id="slots" aria-disabled="true"></div>
-        <div class="devnote" data-dev>[초안] 시간대는 임시값, 약국과 확정 후 수정</div>
-        <div class="q2">Guest · 오시는 분</div>
-        <label class="field">이름 또는 활동명<input name="name" required autocomplete="name"></label>
-        <label class="field">연락처 · 본인 또는 매니저<input name="phone" type="tel" inputmode="tel" required placeholder="010-0000-0000" autocomplete="tel"></label>
-        <label class="field">인스타그램 (선택)<input name="instagram" placeholder="@" autocapitalize="off"></label>
-        <label class="field">소속사 (선택)<input name="agency"></label>
-        <label class="field">함께 오시는 분<select name="guests"><option value="0">혼자 갈게요</option><option value="1">한 분과 함께 갈게요</option></select></label>
-        <label class="check"><input type="checkbox" name="consult" checked><span>약사 상담도 받을게요</span></label>
-        <label class="field">미리 알려 주실 것 (선택)<textarea name="note" rows="2" placeholder="피부 고민, 촬영 여부, 도착 시간 등"></textarea></label>
-        <label class="check"><input type="checkbox" name="agree" required><span>개인정보 수집·이용에 동의해요 (필수)</span></label>
-        <details><summary>자세히 보기</summary>
-          <p>수집 항목: 이름(활동명), 연락처, 인스타그램 계정, 소속사, 동반 여부, 상담 희망 여부, 메모<br>
-          이용 목적: 방문 일정 확인과 안내 연락<br>
-          보관 기간: 행사가 끝나고 1개월 안에 파기<br>
-          동의하지 않으셔도 되지만, 이 경우 온라인 회신은 어려워요.</p></details>
-        <button class="submit" type="submit" id="go">참석 회신</button>
-        <div class="msg" id="msg" role="status"></div>
-      </form>
-      <div class="done" id="done">
-        <div class="scr sv">With pleasure</div>
-        <h3 id="doneHi">회신 감사합니다</h3>
-        <div class="pass" id="pass"></div>
-        <div class="pass-act"><button type="button" id="savePass">초대권 저장</button><button type="button" id="addCal">캘린더에 추가</button></div>
-        <p class="after">현장에서 이 초대권을 보여 주세요.<br>방문 전, 저희가 먼저 연락드릴게요.</p>
-      </div>
-    </section>
   </div>
-  <footer><span class="logo" role="img" aria-label="PYDERIN"></span><div class="caps">The Blue Christmas · MMXXVI · Seongsu</div></footer>
-</main>
+  <div class="hint caps" id="hint">리본을 풀어 주세요</div>
 
-<a class="fab" id="fab" href="#reply-sec">참석 회신하기</a>
+  <!-- 카드 세트 -->
+  <div class="deck" id="deck"><div class="track">
+    <div class="slide"><div class="sc"><div class="card velvet frame c1">
+      <div class="caps sv">You are cordially invited</div>
+      <div class="the cz sv">THE</div>
+      <div class="b scr sv">Blue</div>
+      <div class="ch cz sv">CHRISTMAS</div>
+      <svg class="star"><use href="#star"/></svg>
+      <div class="caps sv">By appointment</div>
+      <div class="date cz sv num">18 – 29 DECEMBER 2026</div>
+      <div class="rule"></div>
+      <div class="caps sv">Seongsu, Seoul</div>
+      <div class="rule"></div>
+      <div class="caps sv">Pyderin</div>
+    </div></div></div>
+
+    <div class="slide"><div class="sc"><div class="card velvet frame c2">
+      <div class="ttl scr sv">Details</div>
+      <div class="caps sv" style="margin-top:4px">The Blue Christmas</div>
+      <div class="rule"></div>
+      <div class="v"><div class="d cz sv num">18 – 24 DEC</div><b>성수 도레미약국</b><div class="ad">서울 성동구 성수이로 75</div>
+        <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%20%EB%8F%84%EB%A0%88%EB%AF%B8%EC%95%BD%EA%B5%AD" target="_blank" rel="noopener">지도 열기</a></div>
+      <svg class="star"><use href="#star"/></svg>
+      <div class="v"><div class="d cz sv num">25 – 29 DEC</div><b>성수 혼약국</b><div class="ad">서울 성동구 연무장길 60 제5동 1층</div>
+        <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EC%97%B0%EB%AC%B4%EC%9E%A5%EA%B8%B8%2060" target="_blank" rel="noopener">지도 열기</a></div>
+      <div class="foot"><div class="rule"></div><div class="caps sv">By appointment only</div></div>
+    </div></div></div>
+
+    <div class="slide"><div class="sc"><form class="card velvet frame c3" id="rsvp" novalidate>
+      <div class="ttl scr sv">Kindly reply</div>
+      <div class="lbl">Date<small>날짜</small></div>
+      <div class="vname">도레미약국</div><div class="chips" id="d1"></div>
+      <div class="vname">혼약국</div><div class="chips" id="d2"></div>
+      <div class="lbl">Time<small>시간</small></div>
+      <div class="chips" id="slots"></div>
+      <div class="devnote" data-dev>[초안] 시간대는 임시값</div>
+      <div class="lbl">Guest<small>오시는 분</small></div>
+      <input name="name" required autocomplete="name" placeholder="이름 또는 활동명">
+      <input name="phone" type="tel" inputmode="tel" required autocomplete="tel" placeholder="연락처 (본인 또는 매니저)">
+      <div class="chips" id="guests" style="margin-top:10px"><button type="button" class="chip g sel" data-g="0">본인</button><button type="button" class="chip g" data-g="1">1인 동반</button></div>
+      <label class="agree"><input type="checkbox" name="agree" required><span>개인정보 수집·이용에 동의해요 (필수)</span></label>
+      <button type="button" class="more" id="more">자세히 보기</button>
+      <div class="pv" id="pv">수집 항목: 이름(활동명), 연락처, 방문 날짜·시간, 동반 여부<br>이용 목적: 방문 일정 확인과 안내 연락<br>보관 기간: 행사가 끝나고 1개월 안에 파기<br>동의하지 않으셔도 되지만, 이 경우 온라인 회신은 어려워요.<br><u>닫기</u></div>
+      <button class="submit" type="submit" id="go">회신 보내기</button>
+      <div class="msg" id="msg" role="status"></div>
+    </form></div></div>
+  </div></div>
+  <div class="nav" id="nav"><button type="button" id="prev">Prev</button><div class="dots" id="dots"><i class="on"></i><i></i><i></i></div><button type="button" id="next">Next</button></div>
+</main>
 
 <script>
 /* ── 설정: 여기만 고치면 됩니다 ───────────────────── */
 const ENDPOINT = ""; // 구글 Apps Script 웹앱 URL (apps-script/사용법.txt). 비어 있으면 미리보기(초안) 모드
 const VENUES = [
-  {name:"성수 도레미약국", from:18, to:24, color:"#8fb0ff", addr:"서울 성동구 성수이로 75"},
-  {name:"성수 혼약국",     from:25, to:29, color:"#c3b6ff", addr:"서울 성동구 연무장길 60 제5동 1층"}
+  {name:"성수 도레미약국", from:18, to:24, addr:"서울 성동구 성수이로 75", el:"d1"},
+  {name:"성수 혼약국",     from:25, to:29, addr:"서울 성동구 연무장길 60 제5동 1층", el:"d2"}
 ];
 const SLOTS = ["오전 10:00","오전 11:00","오후 7:00","오후 8:00"]; // 임시값 — 약국과 확정 후 수정
 const YEAR = 2026, MONTH = 11; // 11 = 12월
 /* ─────────────────────────────────────────────── */
 
-// 작은 화면에 초대장 맞추기
-const inv = document.getElementById("inv");
-const fit = () => inv.style.setProperty("--fit", Math.min(1, (innerHeight-110)/560, (innerWidth-40)/330).toFixed(3));
+// 화면 크기에 맞추기
+const root = document.documentElement;
+const fit = () => root.style.setProperty("--fit", Math.min(1, (innerHeight-110)/640, (innerWidth-36)/330).toFixed(3));
 fit(); addEventListener("resize", fit);
 
-// ── 소리: 리본 '스르륵', 종소리 (파일 없이 합성) ──
-let AC = null, soundOn = true, last = null;
-const ac = () => { if (!AC){ try{ AC = new (window.AudioContext||window.webkitAudioContext)(); }catch(_){} } if (AC && AC.state === "suspended") AC.resume(); return AC; };
-const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(_){} };
-function noise(sec){ const a = ac(), n = Math.floor(sec*a.sampleRate), b = a.createBuffer(1,n,a.sampleRate), d = b.getChannelData(0); for (let i=0;i<n;i++) d[i] = Math.random()*2-1; const s = a.createBufferSource(); s.buffer = b; return s; }
-function swish(){
-  const a = ac(); if (!a || !soundOn) return; const t = a.currentTime, s = noise(.6), f = a.createBiquadFilter(), g = a.createGain();
-  f.type = "bandpass"; f.Q.value = 1.1; f.frequency.setValueAtTime(3400,t); f.frequency.exponentialRampToValueAtTime(600,t+.55);
-  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.08,t+.08); g.gain.exponentialRampToValueAtTime(.001,t+.6);
-  s.connect(f).connect(g).connect(a.destination); s.start(t);
-}
-function chime(delay=0, base=1046.5){                   // 은은한 종소리: 화음 세 음을 살짝 어긋나게
-  const a = ac(); if (!a || !soundOn) return; const t0 = a.currentTime + delay;
-  [1, 1.26, 1.5].forEach((r,k) => { const t = t0 + k*.12, o = a.createOscillator(), o2 = a.createOscillator(), g = a.createGain();
-    o.type = "sine"; o.frequency.value = base*r; o2.type = "sine"; o2.frequency.value = base*r*2.01;
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.05,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+2.4);
-    const g2 = a.createGain(); g2.gain.value = .25; o.connect(g); o2.connect(g2).connect(g); g.connect(a.destination); o.start(t); o2.start(t); o.stop(t+2.5); o2.stop(t+2.5); });
-}
-const sndBtn = document.getElementById("snd");
-sndBtn.onclick = () => { soundOn = !soundOn; sndBtn.textContent = soundOn ? "SOUND ON" : "SOUND OFF"; if (soundOn) chime(0, 1318.5); };
+// 리본 '스르륵' (이때 한 번만)
+let AC = null;
+function swish(){ try{
+  AC = AC || new (window.AudioContext||window.webkitAudioContext)(); const a = AC, t = a.currentTime, n = Math.floor(.6*a.sampleRate), b = a.createBuffer(1,n,a.sampleRate), d = b.getChannelData(0);
+  for (let i=0;i<n;i++) d[i] = Math.random()*2-1; const s = a.createBufferSource(); s.buffer = b;
+  const f = a.createBiquadFilter(), g = a.createGain(); f.type = "bandpass"; f.Q.value = 1.1; f.frequency.setValueAtTime(3400,t); f.frequency.exponentialRampToValueAtTime(600,t+.55);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.07,t+.08); g.gain.exponentialRampToValueAtTime(.001,t+.6); s.connect(f).connect(g).connect(a.destination); s.start(t);
+}catch(_){} }
 
-// ── 리본 풀기 → 표지 열기 ──
-const hint = document.getElementById("hint");
-function openInvite(){
-  if (inv.classList.contains("open")) return;
-  inv.classList.add("open"); swish(); buzz(12); chime(1.3);
-  hint.style.opacity = 0;
-  setTimeout(() => { inv.classList.add("gone"); document.body.classList.remove("locked"); hint.textContent = "아래로 내려 주세요"; hint.style.opacity = 1; }, 2000);
+// 봉투 열기 → 카드 세트
+const box = document.getElementById("box"), stage = document.getElementById("stage"), hold = document.getElementById("hold");
+function openEnv(){
+  if (box.classList.contains("opening")) return;
+  box.classList.add("opening"); swish(); try{ navigator.vibrate && navigator.vibrate(12); }catch(_){}
+  document.getElementById("hint").style.opacity = 0;
+  setTimeout(() => { box.classList.add("opened"); hold.style.display = "none"; stage.classList.add("show"); }, 2700);
 }
-document.getElementById("bow").onclick = openInvite;
-document.getElementById("cover").onclick = openInvite;
+document.getElementById("bow").onclick = openEnv;
+document.querySelector(".env").onclick = openEnv;
 
-// ── 달력 ──
+// 넘기기
+const deck = document.getElementById("deck"), dots = [...document.querySelectorAll("#dots i")];
+const idx = () => Math.round(deck.scrollLeft / deck.clientWidth);
+const go2 = i => deck.scrollTo({left: i*deck.clientWidth, behavior:"smooth"});
+const upd = () => { const i = idx(); dots.forEach((d,k) => d.classList.toggle("on", k===i)); document.getElementById("prev").disabled = i===0; document.getElementById("next").disabled = i===2; };
+deck.addEventListener("scroll", () => requestAnimationFrame(upd), {passive:true});
+document.getElementById("prev").onclick = () => go2(Math.max(0, idx()-1));
+document.getElementById("next").onclick = () => go2(Math.min(2, idx()+1));
+dots.forEach((d,k) => d.onclick = () => go2(k));
+upd();
+
+// 회신 카드: 날짜·시간·동반 칩
 const W = ["일","월","화","수","목","금","토"];
 const wd = d => W[new Date(YEAR,MONTH,d).getDay()];
-const cal = document.getElementById("cal"), slotsEl = document.getElementById("slots");
-const pick = {day:null, venue:null, slot:null};
-W.forEach(w => cal.insertAdjacentHTML("beforeend", `<div class="w">${w}</div>`));
-for (let i=0, f=new Date(YEAR,MONTH,1).getDay(); i<f; i++) cal.insertAdjacentHTML("beforeend","<span></span>");
-for (let d=1, lastD=new Date(YEAR,MONTH+1,0).getDate(); d<=lastD; d++){
-  const v = VENUES.find(x => d>=x.from && d<=x.to), b = document.createElement("button");
-  b.type="button"; b.className="day"+(v?" on":""); b.textContent=d; b.disabled=!v;
-  if (v){
-    b.style.setProperty("--c", v.color);
-    b.setAttribute("aria-label", `12월 ${d}일 ${wd(d)}요일, ${v.name}`);
-    b.onclick = () => {
-      cal.querySelectorAll(".sel").forEach(x=>x.classList.remove("sel"));
-      b.classList.add("sel"); Object.assign(pick,{day:d, venue:v.name});
-      document.getElementById("picked").textContent = `12월 ${d}일 ${wd(d)}요일, ${v.name}`;
-      slotsEl.setAttribute("aria-disabled","false");
-    };
-  }
-  cal.appendChild(b);
-}
-SLOTS.forEach(s => {
-  const b = document.createElement("button");
-  b.type="button"; b.className="slot"; b.textContent=s;
-  b.onclick = () => { slotsEl.querySelectorAll(".sel").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); pick.slot=s; };
-  slotsEl.appendChild(b);
-});
+const pick = {day:null, venue:null, slot:null, guests:"0"};
+const one = (box, btn) => { box.closest("form").querySelectorAll(box.dataset.group).forEach(x => x.classList.remove("sel")); btn.classList.add("sel"); document.getElementById("msg").textContent = ""; };
+VENUES.forEach(v => { const el = document.getElementById(v.el); el.dataset.group = ".chip.day";
+  for (let d=v.from; d<=v.to; d++){ const b = document.createElement("button"); b.type = "button"; b.className = "chip day num"; b.innerHTML = `${d}<small>${wd(d)}</small>`;
+    b.setAttribute("aria-label", `12월 ${d}일 ${wd(d)}요일, ${v.name}`); b.onclick = () => { one(el,b); pick.day = d; pick.venue = v.name; }; el.appendChild(b); } });
+const slotsEl = document.getElementById("slots"); slotsEl.dataset.group = ".chip.t";
+SLOTS.forEach(s => { const b = document.createElement("button"); b.type = "button"; b.className = "chip t"; b.textContent = s; b.onclick = () => { one(slotsEl,b); pick.slot = s; }; slotsEl.appendChild(b); });
+const gEl = document.getElementById("guests"); gEl.dataset.group = ".chip.g";
+gEl.querySelectorAll("button").forEach(b => b.onclick = () => { one(gEl,b); pick.guests = b.dataset.g; });
+document.getElementById("more").onclick = () => document.getElementById("pv").classList.toggle("on");
+document.getElementById("pv").onclick = () => document.getElementById("pv").classList.remove("on");
 
-// ── 회신 ──
-const form = document.getElementById("rsvp"), msg = document.getElementById("msg"), go = document.getElementById("go");
+// 회신 보내기 → 초대권 카드
+let last = null;
+const form = document.getElementById("rsvp"), msg = document.getElementById("msg"), goBtn = document.getElementById("go");
 form.onsubmit = async e => {
   e.preventDefault();
   const f = new FormData(form);
-  const err = !pick.day ? "오실 날짜를 골라 주세요"
-    : !pick.slot ? "시간도 골라 주세요"
-    : !f.get("name").trim() ? "이름을 알려 주세요"
-    : !/^[0-9+\-\s()]{9,}$/.test(f.get("phone")) ? "연락처를 다시 확인해 주세요"
-    : !f.get("agree") ? "개인정보 동의에 체크해 주세요" : "";
+  const err = !pick.day ? "날짜를 골라 주세요" : !pick.slot ? "시간을 골라 주세요" : !f.get("name").trim() ? "이름을 적어 주세요"
+    : !/^[0-9+\-\s()]{9,}$/.test(f.get("phone")) ? "연락처를 다시 확인해 주세요" : !f.get("agree") ? "개인정보 동의에 체크해 주세요" : "";
   msg.textContent = err; if (err) return;
-  const data = {
-    date:`${YEAR}-12-${String(pick.day).padStart(2,"0")}`, venue:pick.venue, slot:pick.slot,
-    name:f.get("name").trim(), agency:f.get("agency").trim(), instagram:f.get("instagram").trim(),
-    phone:f.get("phone").trim(), guests:f.get("guests"), consult:f.get("consult")?"희망":"안 함", note:f.get("note").trim(),
-    serial:(Date.now().toString(36).slice(-3) + Math.random().toString(36).slice(2,5)).toUpperCase()
-  };
-  go.disabled=true; go.textContent="보내는 중";
+  const data = { date:`${YEAR}-12-${String(pick.day).padStart(2,"0")}`, venue:pick.venue, slot:pick.slot, name:f.get("name").trim(), agency:"", instagram:"",
+    phone:f.get("phone").trim(), guests:pick.guests, consult:"", note:"", serial:(Date.now().toString(36).slice(-3) + Math.random().toString(36).slice(2,5)).toUpperCase() };
+  goBtn.disabled = true; goBtn.textContent = "보내는 중";
   try{
     if (ENDPOINT) await fetch(ENDPOINT, {method:"POST", mode:"no-cors", body:new URLSearchParams(data)}); // 응답은 못 읽음(Apps Script CORS)
     else console.log("[미리보기] 전송 안 함", data);
-    last = {...data, day:pick.day}; chime(0, 1174.7); buzz([10,40,10]);
-    document.getElementById("doneHi").textContent = `${data.name} 님, 회신 감사합니다`;
-    document.getElementById("pass").innerHTML =
-      `<span class="logo" role="img" aria-label="PYDERIN"></span>
-       <div class="a1 cz sv">ADMIT ${data.guests==="1"?"TWO":"ONE"}</div><div class="a2 caps sv num">No. ${data.serial}</div>
-       <svg class="star" style="margin:16px auto"><use href="#star"/></svg>
-       <div class="a3">12월 ${pick.day}일 ${wd(pick.day)}요일 · ${data.slot}</div><div class="a4">${data.venue}</div>
-       <div class="rule" style="margin:16px auto"></div>
-       <div class="caps sv">${data.consult==="희망"?"With pharmacist consultation":"By invitation only"}</div>` +
-      (ENDPOINT ? "" : `<div class="devnote">[초안] 미리보기라 실제로 저장되지 않았어요</div>`);
-    form.style.display="none"; document.getElementById("fab").remove();
-    const done = document.getElementById("done"); done.style.display="block"; done.scrollIntoView({behavior:"smooth", block:"center"});
-  }catch(_){
-    msg.textContent="보내지 못했어요. 잠시 뒤 다시 눌러 주세요"; go.disabled=false; go.textContent="참석 회신";
-  }
+    last = {...data, day:pick.day};
+    form.outerHTML = `<div class="card velvet frame c4" id="passCard">
+      <div class="scr sv">With pleasure</div>
+      <div class="a1 cz sv">ADMIT ${data.guests==="1"?"TWO":"ONE"}</div><div class="caps sv num">No. ${data.serial}</div>
+      <svg class="star"><use href="#star"/></svg>
+      <div class="a3">12월 ${pick.day}일 ${wd(pick.day)}요일 · ${data.slot}</div><div class="a4">${data.venue}</div>
+      <div class="rule"></div><div class="caps sv">${esc(data.name)}</div>
+      <div class="act"><button type="button" id="savePass">초대권 저장</button><button type="button" id="addCal">캘린더에 추가</button></div>
+      <p class="after">현장에서 이 초대권을 보여 주세요.<br>방문 전, 저희가 먼저 연락드릴게요.</p>
+      ${ENDPOINT ? "" : '<div class="devnote">[초안] 미리보기라 실제로 저장되지 않았어요</div>'}</div>`;
+    document.getElementById("savePass").onclick = async () => saveFile(await passPNG(), `PYDERIN_BlueChristmas_${last.serial}.png`);
+    document.getElementById("addCal").onclick = addCal;
+  }catch(_){ msg.textContent = "보내지 못했어요. 잠시 뒤 다시 눌러 주세요"; goBtn.disabled = false; goBtn.textContent = "회신 보내기"; }
 };
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-// ── 초대권 이미지 저장 ──
+// 초대권 이미지 저장
 function loadImg(src){ return new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; }); }
 async function passPNG(){
-  await Promise.all(["500 40px Cinzel","20px Marcellus","700 40px 'Gowun Batang'"].map(f => document.fonts.load(f).catch(()=>{})));
+  await Promise.all(["500 40px Cinzel","20px Marcellus","700 40px 'Gowun Batang'","60px 'Pinyon Script'"].map(f => document.fonts.load(f).catch(()=>{})));
   const W2 = 900, H2 = 1300, c = document.createElement("canvas"); c.width = W2; c.height = H2; const x = c.getContext("2d");
   const g = x.createLinearGradient(0,0,0,H2); g.addColorStop(0,"#0a2266"); g.addColorStop(.35,"#071c59"); g.addColorStop(.7,"#061643"); g.addColorStop(1,"#040e2d");
-  x.fillStyle = g; x.fillRect(0,0,W2,H2);
-  x.globalAlpha = .05; x.fillStyle = "#fff"; for (let i=0;i<W2;i+=7) x.fillRect(i,0,1,H2); x.globalAlpha = 1;
+  x.fillStyle = g; x.fillRect(0,0,W2,H2); x.globalAlpha = .05; x.fillStyle = "#fff"; for (let i=0;i<W2;i+=7) x.fillRect(i,0,1,H2); x.globalAlpha = 1;
   x.strokeStyle = "rgba(200,210,235,.35)"; x.lineWidth = 2; x.strokeRect(36,36,W2-72,H2-72); x.strokeStyle = "rgba(200,210,235,.15)"; x.strokeRect(48,48,W2-96,H2-96);
   const t = (txt, y, font, ls=0, col="#e9edf6") => { x.font = font; x.textAlign = "center"; x.letterSpacing = ls+"px"; x.fillStyle = col; x.fillText(txt, W2/2, y); };
   const logo = await loadImg("logo-white.png");
-  if (logo){ const lw = 230, lh = lw*173/600, tc = document.createElement("canvas"); tc.width = lw; tc.height = lh; const tx = tc.getContext("2d");
-    tx.drawImage(logo,0,0,lw,lh); tx.globalCompositeOperation = "source-in"; tx.fillStyle = "#dfe4ef"; tx.fillRect(0,0,lw,lh); x.drawImage(tc,(W2-lw)/2,170); }
-  t(`ADMIT ${last.guests==="1"?"TWO":"ONE"}`, 400, "500 64px Cinzel", 4);
-  t(`NO. ${last.serial}`, 460, "26px Marcellus", 6, "#c9d1e6");
-  x.fillStyle = "#e9edf6"; x.beginPath(); const sx = W2/2, sy = 540; x.moveTo(sx,sy-26); x.lineTo(sx+3,sy-3); x.lineTo(sx+24,sy); x.lineTo(sx+3,sy+3); x.lineTo(sx,sy+26); x.lineTo(sx-3,sy+3); x.lineTo(sx-24,sy); x.lineTo(sx-3,sy-3); x.closePath(); x.fill();
-  t(`12월 ${last.day}일 ${wd(last.day)}요일`, 660, "700 50px 'Gowun Batang'");
-  t(last.slot, 730, "700 38px 'Gowun Batang'", 0, "#c9d1e6");
-  t(last.venue, 800, "36px 'Gowun Batang'", 0, "#c9d1e6");
-  x.fillStyle = "rgba(200,210,235,.6)"; x.fillRect(W2/2-40, 880, 80, 2);
-  t("THE BLUE CHRISTMAS · MMXXVI", 990, "24px Marcellus", 6);
-  t(last.consult==="희망" ? "WITH PHARMACIST CONSULTATION" : "BY INVITATION ONLY", 1040, "20px Marcellus", 6, "#c9d1e6");
+  if (logo){ const lw = 210, lh = lw*173/600, tc = document.createElement("canvas"); tc.width = lw; tc.height = lh; const tx = tc.getContext("2d");
+    tx.drawImage(logo,0,0,lw,lh); tx.globalCompositeOperation = "source-in"; tx.fillStyle = "#dfe4ef"; tx.fillRect(0,0,lw,lh); x.drawImage(tc,(W2-lw)/2,150); }
+  t("With pleasure", 330, "96px 'Pinyon Script'");
+  t(`ADMIT ${last.guests==="1"?"TWO":"ONE"}`, 450, "500 60px Cinzel", 4);
+  t(`NO. ${last.serial}`, 505, "26px Marcellus", 6, "#c9d1e6");
+  x.fillStyle = "#e9edf6"; x.beginPath(); const sx = W2/2, sy = 585; x.moveTo(sx,sy-26); x.lineTo(sx+3,sy-3); x.lineTo(sx+24,sy); x.lineTo(sx+3,sy+3); x.lineTo(sx,sy+26); x.lineTo(sx-3,sy+3); x.lineTo(sx-24,sy); x.lineTo(sx-3,sy-3); x.closePath(); x.fill();
+  t(`12월 ${last.day}일 ${wd(last.day)}요일`, 700, "700 50px 'Gowun Batang'");
+  t(last.slot, 770, "700 38px 'Gowun Batang'", 0, "#c9d1e6");
+  t(last.venue, 840, "36px 'Gowun Batang'", 0, "#c9d1e6");
+  x.fillStyle = "rgba(200,210,235,.6)"; x.fillRect(W2/2-40, 905, 80, 2);
+  t(last.name, 990, "40px 'Gowun Batang'");
+  t("THE BLUE CHRISTMAS · MMXXVI · SEONGSU", 1120, "22px Marcellus", 6, "#c9d1e6");
   return new Promise(r => c.toBlob(r, "image/png"));
 }
 function saveFile(blob, name){
@@ -399,27 +339,15 @@ function saveFile(blob, name){
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
 }
-document.getElementById("savePass").onclick = async () => { if (last) saveFile(await passPNG(), `PYDERIN_BlueChristmas_${last.serial}.png`); };
-
-// ── 캘린더에 추가 (.ics, 한국 시간 → UTC) ──
-document.getElementById("addCal").onclick = () => {
-  if (!last) return;
+function addCal(){
   const [ap, hm] = last.slot.split(" "); let [h, m] = hm.split(":").map(Number); if (ap === "오후" && h < 12) h += 12;
   const z = d => d.toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
   const start = new Date(Date.UTC(YEAR, MONTH, last.day, h-9, m)), end = new Date(start.getTime() + 60*60*1000);
   const v = VENUES.find(x => x.name === last.venue);
-  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PYDERIN//Blue Christmas//KO","BEGIN:VEVENT",
-    `UID:${last.serial}@pyderin-blue-christmas`,`DTSTAMP:${z(new Date())}`,`DTSTART:${z(start)}`,`DTEND:${z(end)}`,
-    "SUMMARY:PYDERIN The Blue Christmas",`LOCATION:${last.venue} ${v ? v.addr : ""}`,
-    `DESCRIPTION:초대받은 분 전용 시간 · 초대권 NO. ${last.serial}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PYDERIN//Blue Christmas//KO","BEGIN:VEVENT",`UID:${last.serial}@pyderin-blue-christmas`,`DTSTAMP:${z(new Date())}`,
+    `DTSTART:${z(start)}`,`DTEND:${z(end)}`,"SUMMARY:PYDERIN The Blue Christmas",`LOCATION:${last.venue} ${v ? v.addr : ""}`,`DESCRIPTION:초대권 NO. ${last.serial}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
   saveFile(new Blob([ics], {type:"text/calendar"}), "PYDERIN_BlueChristmas.ics");
-};
-
-// ── 스크롤 등장 · 하단 버튼 ──
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.15});
-document.querySelectorAll(".rv").forEach(el => io.observe(el));
-const fab = document.getElementById("fab"), rs = document.getElementById("reply-sec");
-addEventListener("scroll", () => fab.classList.toggle("show", scrollY > innerHeight*.8 && rs.getBoundingClientRect().top > innerHeight*.6), {passive:true});
+}
 
 if (ENDPOINT){ document.getElementById("dev").remove(); document.querySelectorAll("[data-dev]").forEach(e=>e.remove()); }
 </script>

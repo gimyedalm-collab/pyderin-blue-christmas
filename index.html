@@ -175,9 +175,6 @@ footer .caps{color:#5d6a92}
         <div class="b scr sv">Blue</div>
         <div class="ch cz sv">CHRISTMAS</div>
         <svg class="star"><use href="#star"/></svg>
-        <div class="caps sv">An invitation-only hour<br>of skin, quiet<br>and the blue mask</div>
-        <div class="ko">초대받은 분만을 위한 프라이빗 타임</div>
-        <div class="rule"></div>
         <div class="caps sv">By appointment</div>
         <div class="date cz sv num">18 – 29 DECEMBER 2026</div>
         <div class="rule"></div>
@@ -199,21 +196,14 @@ footer .caps{color:#5d6a92}
   </header>
 
   <div class="wrap">
-    <section class="letter">
-      <div class="head"><div class="scr sv rv">Dear you,</div></div>
-      <div class="to rv">올해 가장 고생한 당신께.</div>
-      <p class="rv">한 해 동안 수고 많으셨어요.<br>이 초대장을 받은 분만 들어올 수 있는<br>작은 연말 자리를 마련했어요.<br>12월, 성수에서 당신을 기다립니다.</p>
-      <div class="fr caps sv rv">— Pyderin</div>
-    </section>
-
     <section>
-      <div class="head"><div class="scr sv rv">The Evening</div><div class="cz sv rv">초대받은 분께 드리는 세 가지</div></div>
+      <div class="head"><div class="scr sv rv">The Evening</div></div>
       <div class="prog">
-        <div class="item rv"><div class="n cz sv">I</div><b>프라이빗 타임</b><span>일반 손님이 없는 시간에 따로 모십니다.<br>동반 한 분까지 함께하실 수 있어요.</span></div>
+        <div class="item rv"><div class="n cz sv">I</div><b>프라이빗 타임</b><span>일반 손님이 없는 시간에 운영해요.<br>동반 1인까지 가능해요.</span></div>
         <svg class="star rv"><use href="#star"/></svg>
-        <div class="item rv"><div class="n cz sv">II</div><b>약사 1:1 피부 상담</b><span>지금의 피부를 함께 살피고,<br>연말에 맞는 루틴을 골라 드려요.</span></div>
+        <div class="item rv"><div class="n cz sv">II</div><b>약사 1:1 피부 상담</b><span>약사가 피부 상태를 보고<br>직접 상담해 드려요.</span></div>
         <svg class="star rv"><use href="#star"/></svg>
-        <div class="item rv"><div class="n cz sv">III</div><b>VIP 기프트 박스</b><span>블루 마스크를 담은<br>연말 한정 박스를 준비했어요.</span></div>
+        <div class="item rv"><div class="n cz sv">III</div><b>VIP 기프트 박스</b><span>블루 마스크가 담긴<br>연말 한정 박스를 드려요.</span></div>
       </div>
       <div class="devnote" data-dev>[초안] VIP 박스 실물 사진 나오면 추가</div>
     </section>
@@ -223,11 +213,10 @@ footer .caps{color:#5d6a92}
       <q class="rv">해외 매체들이 주목한<br>‘헤일리 비버의 블루 마스크’</q>
       <div class="src rv">출처 Marie Claire Australia 2026.11.17 · RUSSH 2026.11.02</div>
       <div class="obj rv"><img src="pouch.png" alt="하이드로부스터 PDRN SOS 히알 수딩 마스크"></div>
-      <p class="get rv">해외에선 구하기 어렵다는 그 팩,<br>성수에서 직접 만나 보세요.</p>
     </section>
 
     <section>
-      <div class="head"><div class="scr sv rv">Your Seat</div><div class="cz sv rv">날짜마다 자리가 마련된 곳</div></div>
+      <div class="head"><div class="scr sv rv">Venue</div><div class="cz sv rv">날짜별 장소</div></div>
       <div class="places">
         <div class="place rv"><div class="d cz sv num">18 – 24</div><div class="m caps sv">December</div><b>성수 도레미약국</b><div class="ad">서울 성동구<br>성수이로 75</div>
           <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%20%EB%8F%84%EB%A0%88%EB%AF%B8%EC%95%BD%EA%B5%AD" target="_blank" rel="noopener">지도 열기</a></div>
@@ -260,7 +249,7 @@ footer .caps{color:#5d6a92}
           이용 목적: 방문 일정 확인과 안내 연락<br>
           보관 기간: 행사가 끝나고 1개월 안에 파기<br>
           동의하지 않으셔도 되지만, 이 경우 온라인 회신은 어려워요.</p></details>
-        <button class="submit" type="submit" id="go">기꺼이 참석할게요</button>
+        <button class="submit" type="submit" id="go">참석 회신</button>
         <div class="msg" id="msg" role="status"></div>
       </form>
       <div class="done" id="done">
@@ -388,7 +377,7 @@ form.onsubmit = async e => {
     form.style.display="none"; document.getElementById("fab").remove();
     const done = document.getElementById("done"); done.style.display="block"; done.scrollIntoView({behavior:"smooth", block:"center"});
   }catch(_){
-    msg.textContent="보내지 못했어요. 잠시 뒤 다시 눌러 주세요"; go.disabled=false; go.textContent="기꺼이 참석할게요";
+    msg.textContent="보내지 못했어요. 잠시 뒤 다시 눌러 주세요"; go.disabled=false; go.textContent="참석 회신";
   }
 };
 

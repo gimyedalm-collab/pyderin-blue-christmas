@@ -39,7 +39,8 @@ main{position:relative;z-index:1}
 .ground{position:absolute;left:-10%;right:-10%;bottom:-34px;height:92px;border-radius:50%;background:radial-gradient(#fff 60%,#eef2ff)}
 .sm{position:absolute;left:50%;bottom:26px;width:148px;margin-left:-74px;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite;filter:drop-shadow(0 6px 6px rgba(40,60,150,.22))}
 @keyframes sway{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
-.globe canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.globe canvas{position:absolute;inset:0;width:100%;height:100%}
+#gback{z-index:0}.globe .ground{z-index:1}.globe .sm{z-index:2}#gsnow{z-index:3}.globe::after{z-index:4}
 .base{position:relative;width:186px;height:40px;margin:-12px auto 0;border-radius:6px 6px 46px 46px;background:linear-gradient(180deg,#4466e6,#2a45bf);box-shadow:0 14px 22px rgba(40,60,160,.3)}
 .base span{position:absolute;inset:0;line-height:40px;color:#fff;font-size:22px}
 .globe-wrap.shake .globe{animation:shake .7s var(--ease)}
@@ -109,7 +110,9 @@ h2 .hand{color:var(--blue);font-size:1.4em}
 .cool{margin-top:16px;padding:24px 20px;border-radius:22px;background:linear-gradient(140deg,#4466e6,#2a45bf);color:#fff;display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:center;overflow:hidden}
 .cool .t{font-size:15px;opacity:.92}
 .cool .hk{margin-top:4px;font-size:22px;line-height:1.4;font-weight:400}
-.cool .tmp{margin-top:16px;font-size:14px;font-weight:600}
+.cool .get{margin-top:16px;font-size:15px;line-height:1.6}
+.cool .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.cool .chips span{padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.18);font-size:12.5px;font-family:Pretendard,sans-serif}
 .cool .src{margin-top:4px;font-size:11.5px;line-height:1.55;opacity:.78;font-family:Pretendard,sans-serif}
 .cool img{width:108px;transform:rotate(8deg);filter:drop-shadow(0 10px 12px rgba(0,0,0,.25))}
 
@@ -188,7 +191,7 @@ footer .logo{width:72px;margin:0 auto 8px;background:var(--soft)}
   <header class="hero">
     <span class="logo" role="img" aria-label="PYDERIN"></span>
     <div class="globe-wrap" id="globe" role="button" aria-label="스노볼 흔들기">
-      <div class="globe"><div class="ground"></div><img class="sm" src="snowman.png" alt="파란 시트 마스크를 붙인 눈사람"><canvas id="gsnow"></canvas></div>
+      <div class="globe"><canvas id="gback"></canvas><div class="ground"></div><img class="sm" src="snowman.png" alt="파란 시트 마스크를 붙인 눈사람"><canvas id="gsnow"></canvas></div>
       <div class="base"><span class="hand">Blue Christmas</span></div>
     </div>
     <div class="tip">스노볼을 톡 눌러 보세요</div>
@@ -235,8 +238,8 @@ footer .logo{width:72px;margin:0 auto 8px;background:var(--soft)}
           <div class="t">해외 매체가</div>
           <div class="hk">'헤일리 비버의<br>블루 마스크'로<br>소개한 바로 그 팩</div>
           <div class="src">Marie Claire Australia, 2026.11.17 보도</div>
-          <div class="tmp num">붙이면 피부 온도<br><span style="white-space:nowrap">36.4℃ → 25.4℃</span></div>
-          <div class="src">인체적용시험 성인 21명 평균 · 바르지 않은 쪽은 4.0℃ 내려감</div>
+          <div class="get">해외에선 구하기 어렵다던<br>그 팩, 성수 약국에서<br>직접 만나 봐요</div>
+          <div class="chips"><span>PDRN</span><span>아줄렌</span><span>스네일 뮤신</span></div>
         </div>
         <img src="pouch.png" alt="하이드로부스터 PDRN SOS 히알 수딩 마스크">
       </div>
@@ -316,25 +319,61 @@ const YEAR = 2026, MONTH = 11; // 11 = 12월
 
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-// 스노볼: 안쪽 눈 + 누르면 흔들기
-const gc = document.getElementById("gsnow"), gx = gc.getContext("2d");
-const GS = 258; gc.width = gc.height = GS*2; gx.scale(2,2);
-const gf = Array.from({length:70}, () => ({x:Math.random()*GS, y:Math.random()*GS, r:.8+Math.random()*2.2, vx:0, vy:.2+Math.random()*.4}));
-let storm = 0;
-(function gtick(){
-  gx.clearRect(0,0,GS,GS);
-  for (const f of gf){
-    if (storm>0){ f.vx += (Math.random()-.5)*.8; f.vy -= Math.random()*.35; }
-    f.vx *= .96; f.vy = Math.min(f.vy*.97 + .02, .6); f.x += f.vx; f.y += f.vy;
-    if (f.y > GS-34){ f.y = GS-34; f.vy = 0; f.vx *= .5; }   // 바닥에 쌓임
-    if (f.y < 0) f.y = 0; if (f.x < 0) f.x = GS; if (f.x > GS) f.x = 0;
-    gx.beginPath(); gx.arc(f.x,f.y,f.r,0,7); gx.fillStyle="rgba(255,255,255,.92)"; gx.fill();
+// 스노볼: 눈사람 뒤·앞 두 겹 눈 + 반짝이, 누르면 소용돌이, 바닥에 쌓였다 녹음
+const GS = 258, CX = 129, CY = 129, RAD = 122;
+const mk = id => { const c = document.getElementById(id); c.width = c.height = GS*2; const x = c.getContext("2d"); x.scale(2,2); return x; };
+const bx = mk("gback"), fx = mk("gsnow");
+const spr = document.createElement("canvas"); spr.width = spr.height = 32;
+{ const s = spr.getContext("2d"), g = s.createRadialGradient(16,16,0,16,16,16);
+  g.addColorStop(0,"rgba(255,255,255,1)"); g.addColorStop(.45,"rgba(255,255,255,.85)"); g.addColorStop(1,"rgba(255,255,255,0)");
+  s.fillStyle = g; s.fillRect(0,0,32,32); }
+const groundY = x => 246 - 46*Math.sqrt(Math.max(0, 1 - ((x-CX)/154.8)**2));
+const rnd = (a,b) => a + Math.random()*(b-a);
+const parts = [];
+for (let i=0;i<120;i++){ const front = i%3===0;
+  parts.push({front, glit:false, r: front ? rnd(1.6,3.2) : rnd(.7,1.9), x:rnd(20,238), y:rnd(10,230), vx:0, vy:rnd(.1,.3), ph:rnd(0,6), settled: Math.random()<.45 ? 1 : 0}); }
+for (let i=0;i<16;i++) parts.push({front:Math.random()<.5, glit:true, r:rnd(1,1.8), x:rnd(30,228), y:rnd(30,220), vx:0, vy:rnd(.05,.15), ph:rnd(0,6), settled:0});
+for (const p of parts) if (p.settled) p.y = groundY(p.x) - p.r*.5;
+let storm = 0, t = 0;
+const MELT = 300; // 쌓인 눈이 녹는 프레임 수(약 5초)
+function respawn(p){ p.x = rnd(30,228); p.y = rnd(-10,20); p.vx = 0; p.vy = rnd(.1,.3); p.settled = 0; }
+function step(p){
+  if (p.settled){ if (++p.settled > MELT) respawn(p); return; }
+  const dx = p.x-CX, dy = p.y-CY;
+  if (storm > 0){ const k = storm/90; p.vx += (-dy*.0028 + rnd(-.25,.25))*k; p.vy += (dx*.0028 - .03 + rnd(-.25,.2))*k; }
+  p.vy += p.glit ? .004 : .006 + p.r*.002;
+  p.vx *= .975; p.vy *= .975;
+  if (storm <= 0) p.vy = Math.min(p.vy, .22 + p.r*.09);
+  p.x += p.vx + Math.sin(t*.02 + p.ph)*.18; p.y += p.vy;
+  const d = Math.hypot(p.x-CX, p.y-CY);                // 유리벽에 닿으면 안쪽으로
+  if (d > RAD){ p.x = CX + (p.x-CX)*RAD/d; p.y = CY + (p.y-CY)*RAD/d; p.vx *= -.4; p.vy *= -.4; }
+  const gy = groundY(p.x) - p.r*.5;
+  if (p.y >= gy){ if (p.glit){ p.y = gy; p.vy = -Math.abs(p.vy)*.3; } else if (storm < 20){ p.y = gy; p.settled = 1; } else { p.y = gy; p.vy = -Math.abs(p.vy); } }
+}
+function draw(x, p){
+  if (p.glit){
+    const a = .35 + .65*Math.abs(Math.sin(t*.06 + p.ph)), s = p.r*2.6;
+    x.globalAlpha = a; x.strokeStyle = "#e6eeff"; x.lineWidth = .9;
+    x.beginPath(); x.moveTo(p.x-s,p.y); x.lineTo(p.x+s,p.y); x.moveTo(p.x,p.y-s); x.lineTo(p.x,p.y+s); x.stroke();
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(p.x,p.y,p.r*.6,0,7); x.fill(); return;
   }
-  if (storm>0) storm--;
+  const melt = p.settled ? Math.max(0, 1 - p.settled/MELT) : 1;
+  x.globalAlpha = (p.front ? .95 : .7) * melt;
+  const s = p.r*2.4*(p.settled ? .9 + .3*melt : 1);
+  x.drawImage(spr, p.x - s, p.y - s*(p.settled ? .7 : 1), s*2, s*2*(p.settled ? .7 : 1));
+}
+(function gtick(){
+  t++; bx.clearRect(0,0,GS,GS); fx.clearRect(0,0,GS,GS);
+  for (const p of parts){ step(p); draw(p.front ? fx : bx, p); }
+  if (storm > 0) storm--;
   requestAnimationFrame(gtick);
 })();
 const globe = document.getElementById("globe");
-const shake = () => { storm = 26; globe.classList.remove("shake"); void globe.offsetWidth; globe.classList.add("shake"); };
+const shake = () => {
+  storm = 90;
+  for (const p of parts){ p.settled = 0; p.vx += rnd(-2.2,2.2); p.vy -= rnd(1.2,3.2); }
+  globe.classList.remove("shake"); void globe.offsetWidth; globe.classList.add("shake");
+};
 globe.onclick = shake; setTimeout(shake, 700);
 
 // 편지 펼치기

@@ -36,8 +36,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;b
 
 /* ── 무대 ── */
 .stage{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0 24px}
-.box{position:relative;width:330px;height:640px;transform:scale(var(--fit,1));transform-origin:center}
-.hold{width:100%;height:calc(640px * var(--fit,1));display:flex;justify-content:center;align-items:center}
+.box{position:relative;width:330px;height:640px;transform:scale(var(--efit,1));transform-origin:center}
+.hold{width:100%;height:calc(640px * var(--efit,1));display:flex;justify-content:center;align-items:center}
 
 /* 봉투 */
 .env{position:absolute;inset:0;z-index:5;transition:transform 1s cubic-bezier(.6,0,.3,1) 1.9s,opacity .8s ease 2.1s}
@@ -70,22 +70,19 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;b
 .box.opening .env{transform:translateY(120%);opacity:0}
 .box.opened .env,.box.opened .band,.box.opened .bow{display:none}
 
-/* 카드 묶음 (옆으로 넘김) */
-.deck{display:none;width:100%;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.deck::-webkit-scrollbar{display:none}
-.deck .track{display:flex}
-.slide{flex:0 0 100%;scroll-snap-align:center;display:flex;justify-content:center;padding:4px 0 10px}
+/* 카드 묶음 (세로 스크롤) */
+.deck{display:none;width:100%}
+.deck .track{display:flex;flex-direction:column;align-items:center;gap:56px;padding:8px 0 90px}
 .card{position:relative;width:330px;height:640px;zoom:var(--fit,1);border-radius:3px;overflow:hidden;
   display:flex;flex-direction:column;align-items:center;text-align:center;padding:44px 28px 40px}
-.show .deck{display:block;animation:fadein .6s ease both}
-@keyframes fadein{from{opacity:0}to{opacity:1}}
-.nav{display:none;align-items:center;gap:16px;margin-top:10px}
-.show .nav{display:flex;animation:fadein .6s ease .3s both}
-.nav button{background:none;border:0;color:var(--mute);font-family:Marcellus,serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 6px;cursor:pointer}
-.nav button:disabled{opacity:.25}
-.dots{display:flex;gap:8px}
-.dots i{width:6px;height:6px;border-radius:50%;background:rgba(200,210,235,.3);transition:background .3s}
-.dots i.on{background:#e9edf6}
+.slide{display:flex;justify-content:center;width:100%;opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.slide.in{opacity:1;transform:none}
+.show .deck{display:block}
+.show.stage{justify-content:flex-start;padding-top:36px}
+.foot-logo{display:none;text-align:center;padding-bottom:70px}
+.show ~ .foot-logo{display:block}
+.foot-logo .logo{width:60px;margin:0 auto 8px;color:#5d6a92}
+.foot-logo .caps{color:#5d6a92}
 
 /* 카드 1: 초대장 */
 .c1{justify-content:center}
@@ -213,8 +210,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;b
       <div class="msg" id="msg" role="status"></div>
     </form></div></div>
   </div></div>
-  <div class="nav" id="nav"><button type="button" id="prev">Prev</button><div class="dots" id="dots"><i class="on"></i><i></i><i></i></div><button type="button" id="next">Next</button></div>
 </main>
+<div class="foot-logo"><span class="logo" role="img" aria-label="PYDERIN"></span><div class="caps">The Blue Christmas · MMXXVI · Seongsu</div></div>
 
 <script>
 /* ── 설정: 여기만 고치면 됩니다 ───────────────────── */
@@ -229,7 +226,7 @@ const YEAR = 2026, MONTH = 11; // 11 = 12월
 
 // 화면 크기에 맞추기
 const root = document.documentElement;
-const fit = () => root.style.setProperty("--fit", Math.min(1, (innerHeight-110)/640, (innerWidth-36)/330).toFixed(3));
+const fit = () => { root.style.setProperty("--efit", Math.min(1, (innerHeight-110)/640, (innerWidth-36)/330).toFixed(3)); root.style.setProperty("--fit", Math.min(1, (innerWidth-30)/330).toFixed(3)); };
 fit(); addEventListener("resize", fit);
 
 // 리본 '스르륵' (이때 한 번만)
@@ -247,21 +244,14 @@ function openEnv(){
   if (box.classList.contains("opening")) return;
   box.classList.add("opening"); swish(); try{ navigator.vibrate && navigator.vibrate(12); }catch(_){}
   document.getElementById("hint").style.opacity = 0;
-  setTimeout(() => { box.classList.add("opened"); hold.style.display = "none"; stage.classList.add("show"); }, 2700);
+  setTimeout(() => { box.classList.add("opened"); hold.style.display = "none"; stage.classList.add("show"); scrollTo(0,0); }, 2700);
 }
 document.getElementById("bow").onclick = openEnv;
 document.querySelector(".env").onclick = openEnv;
 
-// 넘기기
-const deck = document.getElementById("deck"), dots = [...document.querySelectorAll("#dots i")];
-const idx = () => Math.round(deck.scrollLeft / deck.clientWidth);
-const go2 = i => deck.scrollTo({left: i*deck.clientWidth, behavior:"smooth"});
-const upd = () => { const i = idx(); dots.forEach((d,k) => d.classList.toggle("on", k===i)); document.getElementById("prev").disabled = i===0; document.getElementById("next").disabled = i===2; };
-deck.addEventListener("scroll", () => requestAnimationFrame(upd), {passive:true});
-document.getElementById("prev").onclick = () => go2(Math.max(0, idx()-1));
-document.getElementById("next").onclick = () => go2(Math.min(2, idx()+1));
-dots.forEach((d,k) => d.onclick = () => go2(k));
-upd();
+// 스크롤로 카드 하나씩 등장
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll(".slide").forEach(el => io.observe(el));
 
 // 회신 카드: 날짜·시간·동반 칩
 const W = ["일","월","화","수","목","금","토"];

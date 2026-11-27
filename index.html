@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>피더린에서 편지가 왔어요</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#9fb8ff">
+<meta property="og:title" content="피더린에서 편지가 왔어요">
+<meta property="og:description" content="올해 가장 고생한 당신께, 파란 크리스마스 초대장">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --blue:#3554d1; --deep:#1f2f78; --soft:#5b6aa8; --sky1:#9fb8ff; --sky2:#c9d7ff; --sky3:#f3f6ff;
+  --paper:#fffdf8; --line:#e4e8f6; --ease:cubic-bezier(.22,1,.36,1); --spring:cubic-bezier(.34,1.4,.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--sky3)}
+body{font-family:"Gowun Dodum",Pretendard,sans-serif;color:var(--deep);word-break:keep-all;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  background:linear-gradient(180deg,var(--sky1) 0,var(--sky2) 700px,var(--sky3) 1500px,var(--sky3) 100%)}
+h1,h2,h3{text-wrap:balance} p{text-wrap:pretty}
+.hand{font-family:"Nanum Pen Script",cursive;letter-spacing:0;line-height:1.1}
+.num{font-family:Pretendard,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.wrap{max-width:420px;margin:0 auto;padding:0 22px}
+.logo{display:block;-webkit-mask:url(logo-white.png) center/contain no-repeat;mask:url(logo-white.png) center/contain no-repeat;aspect-ratio:600/173}
+#snow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+main{position:relative;z-index:1}
+
+/* ── 첫 화면: 스노볼 ── */
+.hero{display:flex;flex-direction:column;align-items:center;padding:34px 22px 0;text-align:center}
+.hero .logo{width:80px;background:#fff}
+.globe-wrap{position:relative;margin-top:30px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.globe{position:relative;width:258px;height:258px;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.95),rgba(226,234,255,.55) 28%,rgba(160,182,255,.35) 68%,rgba(110,140,240,.55));
+  box-shadow:inset -14px -18px 34px rgba(60,90,200,.28),inset 10px 10px 30px rgba(255,255,255,.85),0 26px 44px rgba(60,90,200,.28)}
+.globe::after{content:"";position:absolute;left:22%;top:12%;width:26%;height:14%;border-radius:50%;background:rgba(255,255,255,.7);filter:blur(4px);transform:rotate(-30deg)}
+.ground{position:absolute;left:-10%;right:-10%;bottom:-34px;height:92px;border-radius:50%;background:radial-gradient(#fff 60%,#eef2ff)}
+.sm{position:absolute;left:50%;bottom:26px;width:148px;margin-left:-74px;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite;filter:drop-shadow(0 6px 6px rgba(40,60,150,.22))}
+@keyframes sway{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.globe canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.base{position:relative;width:186px;height:40px;margin:-12px auto 0;border-radius:6px 6px 46px 46px;background:linear-gradient(180deg,#4466e6,#2a45bf);box-shadow:0 14px 22px rgba(40,60,160,.3)}
+.base span{position:absolute;inset:0;line-height:40px;color:#fff;font-size:22px}
+.globe-wrap.shake .globe{animation:shake .7s var(--ease)}
+@keyframes shake{20%{transform:rotate(-7deg)}45%{transform:rotate(6deg)}70%{transform:rotate(-3deg)}}
+.tip{margin-top:12px;font-size:13px;color:#fff}
+.hero h1{margin-top:22px;font-size:27px;line-height:1.4;font-weight:400;color:var(--deep);letter-spacing:-.02em}
+.hero .s{margin-top:10px;font-size:15px;line-height:1.75;color:var(--soft)}
+.down{margin-top:auto;padding-top:22px;font-size:15px;color:var(--blue);display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none}
+.down i{width:10px;height:10px;border-right:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(45deg);animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px) rotate(45deg)}}
+
+/* ── 접힌 편지 ── */
+.letter-sec{padding-top:34px;text-align:center}
+.letter-sec .lead{font-size:15px;color:var(--blue)}
+.letter-box{position:relative;width:310px;height:172px;margin:30px auto 0;transition:height 1.1s var(--ease)}
+.letter-box.open{height:516px}
+.letter{position:absolute;left:0;top:-172px;width:100%;height:516px;perspective:1500px;transform-style:preserve-3d;transition:top 1.1s var(--ease);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.letter-box.open .letter{top:0;cursor:default}
+.panel{position:absolute;left:0;width:100%;height:172px;transform-style:preserve-3d;transition:transform 1s var(--ease)}
+.panel > div{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--paper)}
+.panel > .b{transform:rotateX(180deg)}
+.p1{top:0;transform-origin:50% 100%;transform:rotateX(180deg) translateZ(-2px)}
+.p2{top:172px}
+.p3{top:344px;transform-origin:50% 0;transform:rotateX(-180deg) translateZ(-1px)}
+.p1 > .f{border-radius:20px 20px 0 0}.p3 > .f{border-radius:0 0 20px 20px}
+.p1 > .b{border-radius:0 0 20px 20px;box-shadow:0 14px 30px rgba(53,84,209,.2)}
+.p2 > .f{border-radius:20px;box-shadow:0 18px 40px rgba(53,84,209,.18);transition:border-radius .3s .2s}
+.letter-box.open .p2 > .f{border-radius:0;box-shadow:none}
+.letter-box.open .p1{transform:none}
+.letter-box.open .p3{transform:none;transition-delay:.45s}
+.letter::after{content:"";position:absolute;inset:0;border-radius:20px;box-shadow:0 20px 44px rgba(53,84,209,.2);opacity:0;transition:opacity .6s 1s;pointer-events:none}
+.letter-box.open .letter::after{opacity:1}
+/* 접힌 자국 */
+.p2 > .f::before,.p2 > .f::after{content:"";position:absolute;left:10px;right:10px;height:1px;background:linear-gradient(90deg,transparent,rgba(53,84,209,.14),transparent);opacity:0;transition:opacity .4s 1.2s}
+.p2 > .f::before{top:0}.p2 > .f::after{bottom:0}
+.letter-box.open .p2 > .f::before,.letter-box.open .p2 > .f::after{opacity:1}
+/* 겉면 */
+.outside{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tape{position:absolute;top:-13px;left:50%;width:92px;height:26px;margin-left:-46px;background:rgba(120,150,255,.42);border-radius:3px;transform:rotate(-3deg)}
+.outside .to{font-size:34px;color:var(--blue);line-height:1}
+.outside small{margin-top:12px;font-size:13px;color:var(--soft)}
+/* 안쪽 글 */
+.in1{display:flex;flex-direction:column;justify-content:flex-end;padding:0 28px 8px;text-align:left}
+.in1 .hi{font-size:44px;color:var(--blue);line-height:1.05}
+.in2{padding:10px 26px 0;text-align:left;font-size:16.5px;line-height:1.9;color:#2a2f45}
+.in3{padding:8px 28px 0;text-align:left}
+.in3 .dates{font-size:15px;line-height:1.85;color:#2a2f45}
+.in3 .dates b{color:var(--blue);font-weight:700}
+.in3 .from{margin-top:12px;text-align:right;font-size:32px;color:var(--blue)}
+.open-tip{margin-top:18px;font-size:13px;color:var(--soft);transition:opacity .4s}
+.letter-box.open + .open-tip{opacity:0}
+
+/* ── 공통 섹션 ── */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+section{padding-top:84px}
+h2{font-size:24px;font-weight:400;line-height:1.45;letter-spacing:-.02em;color:var(--deep)}
+h2 .hand{color:var(--blue);font-size:1.4em}
+
+.gifts{margin-top:22px;display:grid;gap:12px}
+.g{position:relative;padding:22px 20px 20px 76px;border-radius:22px;background:#fff;box-shadow:0 10px 26px rgba(53,84,209,.1)}
+.g .ic{position:absolute;left:18px;top:20px;width:42px;height:42px;border-radius:14px;background:var(--sky3);display:flex;align-items:center;justify-content:center}
+.g h3{font-size:18px;font-weight:400;color:var(--deep)}
+.g p{margin-top:4px;font-size:15px;line-height:1.7;color:var(--soft)}
+.g svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.cool{margin-top:16px;padding:24px 20px;border-radius:22px;background:linear-gradient(140deg,#4466e6,#2a45bf);color:#fff;display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:center;overflow:hidden}
+.cool .t{font-size:15px;opacity:.92}
+.cool .n{margin-top:6px;font-size:25px;font-weight:700;white-space:nowrap}
+.cool .n span{opacity:.7;font-weight:400;margin:0 3px}
+.cool .src{margin-top:8px;font-size:11.5px;line-height:1.55;opacity:.78;font-family:Pretendard,sans-serif}
+.cool img{width:108px;transform:rotate(8deg);filter:drop-shadow(0 10px 12px rgba(0,0,0,.25))}
+
+.places{margin-top:22px;display:grid;gap:12px}
+.pl{display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:22px;background:#fff;box-shadow:0 10px 26px rgba(53,84,209,.1);text-align:left}
+.pl .dd{flex:none;width:66px;height:66px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;line-height:1.15}
+.pl .dd b{font-size:18px}.pl .dd small{font-size:11px;opacity:.9}
+.pl .nm{font-size:17px}
+.pl .ad{font-size:13px;color:var(--soft);margin-top:2px}
+.pl a{display:inline-block;margin-top:6px;font-size:13px;color:var(--blue);text-underline-offset:3px}
+
+/* ── 회신 ── */
+.reply{margin-top:22px;padding:26px 20px 24px;border-radius:26px;background:#fff;box-shadow:0 14px 34px rgba(53,84,209,.13)}
+.q{font-size:17px;color:var(--deep);margin-top:30px}
+.q:first-child{margin-top:0}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px;color:var(--soft)}
+.cal-head i{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 4px 0 10px;vertical-align:-1px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px;text-align:center}
+.grid .w{font-size:12px;color:var(--soft)}
+.day{aspect-ratio:1;border:0;border-radius:14px;background:none;font-family:Pretendard,sans-serif;font-size:15px;color:#c9cfe4;display:flex;align-items:center;justify-content:center;transition:transform .25s var(--spring),background .2s}
+.day.on{color:var(--deep);background:var(--bg);cursor:pointer;font-weight:600}
+.day.on:active{transform:scale(.9)}
+.day.sel{background:var(--c);color:#fff;transform:scale(1.06)}
+.picked{margin-top:10px;font-size:15px;min-height:24px;color:var(--blue)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.slot{padding:13px 0;border:0;border-radius:16px;background:var(--sky3);color:var(--deep);font-family:Pretendard,sans-serif;font-size:15px;cursor:pointer;transition:transform .25s var(--spring)}
+.slot:active{transform:scale(.95)}
+.slot.sel{background:var(--blue);color:#fff}
+.slots[aria-disabled=true]{opacity:.4;pointer-events:none}
+.field{display:block;margin-top:10px}
+.field span{display:block;font-size:13px;color:var(--soft);margin:0 0 5px 4px}
+input,select,textarea{display:block;width:100%;padding:14px 16px;border:1.5px solid transparent;border-radius:16px;background:var(--sky3);color:var(--deep);font-family:Pretendard,sans-serif;font-size:16px;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
+input::placeholder,textarea::placeholder{color:#a8b0cc}
+select{background:var(--sky3) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233554d1' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") right 16px center no-repeat}
+.toggle{display:flex;gap:10px;align-items:center;margin-top:12px;padding:14px 16px;border-radius:16px;background:var(--sky3);font-size:15px;cursor:pointer}
+.toggle input,.agree input{width:20px;height:20px;padding:0;flex:none;-webkit-appearance:auto;appearance:auto;accent-color:var(--blue)}
+.agree{display:flex;gap:10px;align-items:flex-start;margin-top:20px;font-size:14px;color:var(--deep)}
+.agree input{width:18px;height:18px;margin-top:2px}
+details{margin:6px 0 0 28px;font-size:12.5px;color:var(--soft);font-family:Pretendard,sans-serif}
+details summary{cursor:pointer;text-decoration:underline;text-underline-offset:2px;list-style:none}
+details p{margin-top:6px;line-height:1.65}
+.submit{margin-top:22px;width:100%;padding:18px;border:0;border-radius:40px;background:var(--blue);color:#fff;font:inherit;font-size:18px;cursor:pointer;box-shadow:0 12px 24px rgba(53,84,209,.3);transition:transform .25s var(--spring)}
+.submit:active{transform:scale(.97)}
+.submit:disabled{opacity:.5}
+.msg{margin-top:10px;font-size:14px;text-align:center;min-height:20px;color:#d2385a}
+
+.done{display:none;text-align:center;padding-top:10px}
+.done .hand{font-size:42px;color:var(--blue)}
+.pass{position:relative;margin:24px auto 0;max-width:300px;padding:28px 22px 24px;border-radius:26px;background:#fff;box-shadow:0 18px 40px rgba(53,84,209,.18);transform:rotate(-1.5deg)}
+.pass .logo{width:76px;margin:0 auto;background:var(--blue)}
+.pass .d{margin-top:16px;font-size:24px;font-weight:700;color:var(--deep)}
+.pass .t{font-size:16px;color:var(--blue)}
+.pass hr{border:0;border-top:2px dashed var(--line);margin:16px 0}
+.pass .w{font-size:15px;line-height:1.7;color:#2a2f45}
+.done .after{margin-top:22px;font-size:15px;line-height:1.8;color:var(--soft)}
+
+footer{padding:80px 0 110px;text-align:center;font-size:13px;color:var(--soft)}
+footer .logo{width:72px;margin:0 auto 8px;background:var(--soft)}
+
+.fab{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translate(-50%,200%);z-index:5;
+  padding:14px 28px;border-radius:40px;background:var(--blue);color:#fff;font-size:16px;text-decoration:none;white-space:nowrap;box-shadow:0 12px 26px rgba(53,84,209,.35);transition:transform .5s var(--ease)}
+.fab.show{transform:translate(-50%,0)}
+.dev{position:fixed;top:10px;right:10px;z-index:9;font-size:11px;padding:3px 8px;border-radius:10px;background:#ffd36e;color:#3a2a00;font-family:Pretendard,sans-serif;font-weight:700}
+.devnote{margin-top:10px;font-size:12px;color:#9a6a00;font-family:Pretendard,sans-serif;text-align:left}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}#snow{display:none}}
+</style>
+</head>
+<body>
+<div class="dev" id="dev">초안</div>
+<canvas id="snow" aria-hidden="true"></canvas>
+
+<main>
+  <!-- 스노볼 -->
+  <header class="hero">
+    <span class="logo" role="img" aria-label="PYDERIN"></span>
+    <div class="globe-wrap" id="globe" role="button" aria-label="스노볼 흔들기">
+      <div class="globe"><div class="ground"></div><img class="sm" src="snowman.png" alt="파란 시트 마스크를 붙인 눈사람"><canvas id="gsnow"></canvas></div>
+      <div class="base"><span class="hand">Blue Christmas</span></div>
+    </div>
+    <div class="tip">스노볼을 톡 눌러 보세요</div>
+    <h1>파란 크리스마스에<br>초대해요</h1>
+    <p class="s">12월 18일부터 29일까지, 성수에서</p>
+  </header>
+
+  <div class="wrap">
+    <!-- 접힌 손편지 -->
+    <section class="letter-sec" id="letter-sec">
+      <div class="lead">당신 앞으로 편지가 와 있어요</div>
+      <div class="letter-box" id="lbox">
+        <div class="letter" id="letter" role="button" aria-label="편지 펼치기">
+          <div class="panel p1">
+            <div class="f in1"><span class="logo" style="position:absolute;top:24px;left:26px;width:64px;background:var(--blue);opacity:.85"></span><div class="hi hand">고생 많았죠 :)</div></div>
+            <div class="b outside"><div class="tape"></div><div class="to hand">올해 가장 고생한 당신께</div><small>눌러서 펼쳐 보세요</small></div>
+          </div>
+          <div class="panel p2"><div class="f in2">올 한 해, 정말 바빴잖아요.<br>연말엔 피부도 좀 쉬게 해 줘요.<br>성수에 당신 자리 하나,<br>따로 비워 둘게요.</div></div>
+          <div class="panel p3">
+            <div class="f in3">
+              <div class="dates num"><b>12.18 ~ 24</b>&nbsp; 성수 도레미약국<br><b>12.25 ~ 29</b>&nbsp; 성수 혼약국</div>
+              <div class="from hand">피더린이</div>
+            </div>
+            <div class="b"></div>
+          </div>
+        </div>
+      </div>
+      <div class="open-tip">편지를 눌러 주세요</div>
+    </section>
+
+    <!-- 준비한 것 -->
+    <section>
+      <h2 class="rv"><span class="hand">오시면</span><br>이렇게 준비해 둘게요</h2>
+      <div class="gifts">
+        <div class="g rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div>
+          <h3>아무도 없는 시간, 따로</h3><p>일반 손님 없는 시간에 문 열어 둘게요. 한 명 데려와도 좋아요.</p></div>
+        <div class="g rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19c0-3 3.5-5 8-5s8 2 8 5"/><circle cx="12" cy="8" r="3.5"/></svg></div>
+          <h3>약사 선생님과 1:1 피부 상담</h3><p>지금 피부 상태 같이 보고, 연말에 딱 맞는 걸 골라 드려요.</p></div>
+        <div class="g rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M3 8h18v3H3zM12 8v12M12 8c-1.5-2.5-4.5-3-4.5-1.2S10 8 12 8c2 0 4.5 0 4.5-1.2S13.5 5.5 12 8"/></svg></div>
+          <h3>가는 길엔 VIP 기프트 박스</h3><p>블루 마스크 담은 연말 한정 박스, 손에 꼭 쥐여 보내 드릴게요.</p></div>
+      </div>
+      <div class="cool rv">
+        <div>
+          <div class="t">블루 마스크 붙이고 나면</div>
+          <div class="n num">36.4℃<span>→</span>25.4℃</div>
+          <div class="src">사용 후 피부 표면 온도 평균 · 인체적용시험 성인 21명<br>같은 시험에서 바르지 않은 쪽은 4.0℃ 내려감</div>
+        </div>
+        <img src="pouch.png" alt="하이드로부스터 PDRN SOS 히알 수딩 마스크">
+      </div>
+      <div class="devnote" data-dev>[초안] VIP 박스 실물 사진 나오면 추가</div>
+    </section>
+
+    <!-- 장소 -->
+    <section>
+      <h2 class="rv">날짜마다<br>만나는 곳이 달라요</h2>
+      <div class="places">
+        <div class="pl rv"><div class="dd num" style="background:#4f7cff"><b>18~24</b><small>DEC</small></div>
+          <div><div class="nm">성수 도레미약국</div><div class="ad">서울 성동구 성수이로 75</div>
+          <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%20%EB%8F%84%EB%A0%88%EB%AF%B8%EC%95%BD%EA%B5%AD" target="_blank" rel="noopener">지도 열기</a></div></div>
+        <div class="pl rv"><div class="dd num" style="background:#8f7cf0"><b>25~29</b><small>DEC</small></div>
+          <div><div class="nm">성수 혼약국</div><div class="ad">서울 성동구 성수동<span data-dev> · [초안] 상세 주소 확인 중</span></div>
+          <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%20%ED%98%BC%EC%95%BD%EA%B5%AD" target="_blank" rel="noopener">지도 열기</a></div></div>
+      </div>
+    </section>
+
+    <!-- 회신 -->
+    <section id="reply-sec">
+      <h2 class="rv"><span class="hand">언제 올 수 있어요?</span><br>편한 날 콕 골라 주세요</h2>
+
+      <form class="reply rv" id="rsvp" novalidate>
+        <div class="q">날짜</div>
+        <div class="cal-head"><span class="num">2026년 12월</span><span><i style="background:#4f7cff"></i>도레미<i style="background:#8f7cf0"></i>혼약국</span></div>
+        <div class="grid" id="cal" role="group" aria-label="12월 방문 날짜"></div>
+        <div class="picked" id="picked"></div>
+
+        <div class="q">시간</div>
+        <div class="slots" id="slots" aria-disabled="true"></div>
+        <div class="devnote" data-dev>[초안] 시간대는 임시값, 약국과 확정 후 수정</div>
+
+        <div class="q">누가 오는지 알려 주세요</div>
+        <label class="field"><span>이름 또는 활동명</span><input name="name" required autocomplete="name"></label>
+        <label class="field"><span>연락처 (본인 또는 매니저)</span><input name="phone" type="tel" inputmode="tel" required placeholder="010-0000-0000" autocomplete="tel"></label>
+        <label class="field"><span>인스타그램 (선택)</span><input name="instagram" placeholder="@" autocapitalize="off"></label>
+        <label class="field"><span>소속사 (선택)</span><input name="agency"></label>
+        <label class="field"><span>같이 오는 분</span><select name="guests"><option value="0">혼자 갈게요</option><option value="1">한 명이랑 같이 갈게요</option></select></label>
+        <label class="toggle"><input type="checkbox" name="consult" checked><span>약사 선생님 상담도 받을래요</span></label>
+        <label class="field"><span>미리 알려 줄 것 (선택)</span><textarea name="note" rows="2" placeholder="요즘 피부 고민, 촬영해도 되는지, 도착 시간 같은 것"></textarea></label>
+
+        <label class="agree"><input type="checkbox" name="agree" required><span>개인정보 수집·이용에 동의해요 (필수)</span></label>
+        <details><summary>자세히 보기</summary>
+          <p>수집 항목: 이름(활동명), 연락처, 인스타그램 계정, 소속사, 동반 여부, 상담 희망 여부, 메모<br>
+          이용 목적: 방문 일정 확인과 안내 연락<br>
+          보관 기간: 행사가 끝나고 1개월 안에 파기<br>
+          동의하지 않으셔도 되지만, 그러면 여기서 회신은 어려워요.</p></details>
+
+        <button class="submit" type="submit" id="go">이날 갈게요</button>
+        <div class="msg" id="msg" role="status"></div>
+      </form>
+
+      <div class="done" id="done">
+        <div class="hand" id="doneHi">기다릴게요!</div>
+        <div class="pass" id="pass"></div>
+        <p class="after">가까워지면 저희가 먼저 연락드릴게요.<br>이 화면은 캡처해 두면 편해요.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer><span class="logo" role="img" aria-label="PYDERIN"></span>Blue Christmas 2026, 성수</footer>
+</main>
+
+<a class="fab" id="fab" href="#reply-sec">언제 올 수 있어요?</a>
+
+<script>
+/* ── 설정: 여기만 고치면 됩니다 ───────────────────── */
+const ENDPOINT = ""; // 구글 Apps Script 웹앱 URL (apps-script/사용법.txt). 비어 있으면 미리보기(초안) 모드
+const VENUES = [
+  {name:"성수 도레미약국", from:18, to:24, color:"#4f7cff", bg:"#e7eeff"},
+  {name:"성수 혼약국",     from:25, to:29, color:"#8f7cf0", bg:"#efebff"}
+];
+const SLOTS = ["오전 10:00","오전 11:00","오후 7:00","오후 8:00"]; // 임시값 — 약국과 확정 후 수정
+const YEAR = 2026, MONTH = 11; // 11 = 12월
+/* ─────────────────────────────────────────────── */
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// 스노볼: 안쪽 눈 + 누르면 흔들기
+const gc = document.getElementById("gsnow"), gx = gc.getContext("2d");
+const GS = 258; gc.width = gc.height = GS*2; gx.scale(2,2);
+const gf = Array.from({length:70}, () => ({x:Math.random()*GS, y:Math.random()*GS, r:.8+Math.random()*2.2, vx:0, vy:.2+Math.random()*.4}));
+let storm = 0;
+(function gtick(){
+  gx.clearRect(0,0,GS,GS);
+  for (const f of gf){
+    if (storm>0){ f.vx += (Math.random()-.5)*.8; f.vy -= Math.random()*.35; }
+    f.vx *= .96; f.vy = Math.min(f.vy*.97 + .02, .6); f.x += f.vx; f.y += f.vy;
+    if (f.y > GS-34){ f.y = GS-34; f.vy = 0; f.vx *= .5; }   // 바닥에 쌓임
+    if (f.y < 0) f.y = 0; if (f.x < 0) f.x = GS; if (f.x > GS) f.x = 0;
+    gx.beginPath(); gx.arc(f.x,f.y,f.r,0,7); gx.fillStyle="rgba(255,255,255,.92)"; gx.fill();
+  }
+  if (storm>0) storm--;
+  requestAnimationFrame(gtick);
+})();
+const globe = document.getElementById("globe");
+const shake = () => { storm = 26; globe.classList.remove("shake"); void globe.offsetWidth; globe.classList.add("shake"); };
+globe.onclick = shake; setTimeout(shake, 700);
+
+// 편지 펼치기
+const lbox = document.getElementById("lbox");
+document.getElementById("letter").onclick = () => lbox.classList.add("open");
+
+// 달력
+const W = ["일","월","화","수","목","금","토"];
+const wd = d => W[new Date(YEAR,MONTH,d).getDay()];
+const cal = document.getElementById("cal"), slotsEl = document.getElementById("slots");
+const pick = {day:null, venue:null, slot:null};
+W.forEach(w => cal.insertAdjacentHTML("beforeend", `<div class="w">${w}</div>`));
+for (let i=0, f=new Date(YEAR,MONTH,1).getDay(); i<f; i++) cal.insertAdjacentHTML("beforeend","<span></span>");
+for (let d=1, last=new Date(YEAR,MONTH+1,0).getDate(); d<=last; d++){
+  const v = VENUES.find(x => d>=x.from && d<=x.to), b = document.createElement("button");
+  b.type="button"; b.className="day"+(v?" on":""); b.textContent=d; b.disabled=!v;
+  if (v){
+    b.style.setProperty("--c", v.color); b.style.setProperty("--bg", v.bg);
+    b.setAttribute("aria-label", `12월 ${d}일 ${wd(d)}요일, ${v.name}`);
+    b.onclick = () => {
+      cal.querySelectorAll(".sel").forEach(x=>x.classList.remove("sel"));
+      b.classList.add("sel"); Object.assign(pick,{day:d, venue:v.name});
+      document.getElementById("picked").textContent = `12월 ${d}일 ${wd(d)}요일, ${v.name}에서 만나요`;
+      slotsEl.setAttribute("aria-disabled","false");
+    };
+  }
+  cal.appendChild(b);
+}
+SLOTS.forEach(s => {
+  const b = document.createElement("button");
+  b.type="button"; b.className="slot"; b.textContent=s;
+  b.onclick = () => { slotsEl.querySelectorAll(".sel").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); pick.slot=s; };
+  slotsEl.appendChild(b);
+});
+
+// 회신
+const form = document.getElementById("rsvp"), msg = document.getElementById("msg"), go = document.getElementById("go");
+form.onsubmit = async e => {
+  e.preventDefault();
+  const f = new FormData(form);
+  const err = !pick.day ? "오실 날짜를 먼저 골라 주세요"
+    : !pick.slot ? "시간도 골라 주세요"
+    : !f.get("name").trim() ? "이름을 알려 주세요"
+    : !/^[0-9+\-\s()]{9,}$/.test(f.get("phone")) ? "연락처를 한 번만 다시 봐 주세요"
+    : !f.get("agree") ? "개인정보 동의에 체크해 주세요" : "";
+  msg.textContent = err; if (err) return;
+  const data = {
+    date:`${YEAR}-12-${String(pick.day).padStart(2,"0")}`, venue:pick.venue, slot:pick.slot,
+    name:f.get("name").trim(), agency:f.get("agency").trim(), instagram:f.get("instagram").trim(),
+    phone:f.get("phone").trim(), guests:f.get("guests"), consult:f.get("consult")?"희망":"안 함", note:f.get("note").trim()
+  };
+  go.disabled=true; go.textContent="보내는 중이에요";
+  try{
+    if (ENDPOINT) await fetch(ENDPOINT, {method:"POST", mode:"no-cors", body:new URLSearchParams(data)}); // 응답은 못 읽음(Apps Script CORS)
+    else console.log("[미리보기] 전송 안 함", data);
+    document.getElementById("doneHi").textContent = `기다릴게요, ${data.name} 님!`;
+    document.getElementById("pass").innerHTML =
+      `<div class="tape"></div><span class="logo" role="img" aria-label="PYDERIN"></span>
+       <div class="d num">12월 ${pick.day}일 ${wd(pick.day)}요일</div><div class="t num">${data.slot}</div><hr>
+       <div class="w">${data.venue}${data.guests==="1"?"<br>한 분과 함께":""}${data.consult==="희망"?"<br>약사 상담 예약":""}</div>` +
+      (ENDPOINT ? "" : `<div class="devnote" style="text-align:center">[초안] 미리보기라 실제로 저장되지 않았어요</div>`);
+    form.style.display="none"; document.getElementById("fab").remove();
+    const done = document.getElementById("done"); done.style.display="block"; done.scrollIntoView({behavior:"smooth", block:"center"});
+  }catch(_){
+    msg.textContent="앗, 안 보내졌어요. 잠시 뒤 다시 눌러 주세요"; go.disabled=false; go.textContent="이날 갈게요";
+  }
+};
+
+// 스크롤 등장 · 하단 버튼
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.15});
+document.querySelectorAll(".rv").forEach(el => io.observe(el));
+const fab = document.getElementById("fab"), rs = document.getElementById("reply-sec");
+addEventListener("scroll", () => fab.classList.toggle("show", lbox.classList.contains("open") && lbox.getBoundingClientRect().bottom < innerHeight*.4 && rs.getBoundingClientRect().top > innerHeight*.6), {passive:true});
+
+// 바깥 눈
+const cv = document.getElementById("snow"), cx = cv.getContext("2d");
+let Wd, Ht; const flakes = [];
+const size = () => { const r=devicePixelRatio||1; Wd=innerWidth; Ht=innerHeight; cv.width=Wd*r; cv.height=Ht*r; cx.setTransform(r,0,0,r,0,0); };
+size(); addEventListener("resize", size);
+for (let i=0;i<45;i++){ const z=Math.random(); flakes.push({x:Math.random()*Wd, y:Math.random()*Ht, z, r:1+z*2.2, s:.2+z*.6, p:Math.random()*6}); }
+(function tick(){
+  cx.clearRect(0,0,Wd,Ht);
+  for (const f of flakes){
+    f.y += f.s; f.p += .01; f.x += Math.sin(f.p)*.3*f.z;
+    if (f.y > Ht+4){ f.y=-4; f.x=Math.random()*Wd; }
+    cx.globalAlpha = .45 + f.z*.5; cx.beginPath(); cx.arc(f.x,f.y,f.r,0,7); cx.fillStyle="#fff"; cx.fill();
+  }
+  requestAnimationFrame(tick);
+})();
+
+if (ENDPOINT){ document.getElementById("dev").remove(); document.querySelectorAll("[data-dev]").forEach(e=>e.remove()); }
+</script>
+</body>
+</html>
